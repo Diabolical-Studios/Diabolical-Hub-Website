@@ -10,15 +10,17 @@ exports.handler = async (event, context) => {
 
     const data = JSON.parse(event.body);
 
-    // Get the username from the request (assuming you're passing it in the request)
+    // Get the username and team from the request
     const username = data.username;
+    const teamFromUrl = event.queryStringParameters.team;
 
     // Identify the team of the user
-    const teamName = await getTeamForUsername(username);  // <-- Added 'await' here
-    if (!teamName) {
+    const teamName = await getTeamForUsername(username);
+
+    if (!teamName || teamName !== teamFromUrl) {
         return {
             statusCode: 403,  // Forbidden
-            body: JSON.stringify({ error: 'User is not authorized to upload for any team.' }),
+            body: JSON.stringify({ error: 'User is not authorized to upload for this team.' }),
         };
     }
 
