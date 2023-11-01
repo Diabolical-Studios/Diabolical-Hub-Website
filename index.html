@@ -50,6 +50,10 @@
                     const cardElement = document.createElement('card');
                     cardElement.setAttribute('data-image', card.gameBanner);
 
+                    const icon = document.createElement('img');
+                    icon.setAttribute('slot', 'icon');
+                    icon.textContent = card.gameIcon;
+
                     const header = document.createElement('h2');
                     header.setAttribute('slot', 'header');
                     header.textContent = card.teamName;
@@ -135,13 +139,15 @@
 
 
                 <div id="app" class="card-container" style="z-index: 5;">
+                    <img slot="icon" :src="card.gameIcon" class="game-icon">
                     <card v-for="card in cards" :data-image="card.gameBanner" :key="card.teamName">
                         <h2 slot="header">{{ card.teamName }}</h2>
                         <p slot="content">{{ card.gameDescription }}</p>
                     </card>
+
+
                     <card data-image="../assets/images/BozoBrawl.png">
                         <h2 slot="header">Diabolical Studios</h2>
-                        <img src="../assets/images/logo.png" style="position: absolute; width: 40px; height: 40px; top: 0; right: 0; padding: 20px;" alt="">
                         <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     </card>
                 </div>

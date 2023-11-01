@@ -9,6 +9,7 @@ Vue.component('card', {
       ref="card">
       <div class="card"
         :style="cardStyle">
+        <slot name="icon"></slot>
         <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
         <div class="card-info">
           <slot name="header"></slot>
@@ -52,6 +53,7 @@ Vue.component('card', {
         cardBgImage() {
             return { backgroundImage: 'url(' + this.dataImage + ')' };
         }
+        
     },
     methods: {
         handleMouseMove(e) {

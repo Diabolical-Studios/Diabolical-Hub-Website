@@ -13,6 +13,14 @@
   justify-content: center;
 }
 
+.card-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 60px;
+    z-index: 5;
+}
+
 .card-wrap {
   margin: 10px;
   transform: perspective(800px);
