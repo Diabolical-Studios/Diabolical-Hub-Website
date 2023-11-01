@@ -29,17 +29,27 @@ exports.handler = async function (event, context) {
     const username = userResponse.data.login;
 
     // Load the list of authorized usernames
-    const authorizedUsersResponse = await axios.get('https://diabolical.services/authorized_users.txt');
-    const authorizedUsers = authorizedUsersResponse.data.split('\n');
+    const teamAssignmentsResponse = await axios.get('https://diabolical.services/authorized_users.json');
+    const teamAssignments = JSON.parse(teamAssignmentsResponse.data);
+
+    let userTeam = null;
+    for (const [team, users] of Object.entries(teamAssignments)) {
+      if (users.includes(username)) {
+        userTeam = team;
+        break;
+      }
+    }
+
 
     let redirectUrl;
-    if (authorizedUsers.includes(username)) {
-      // If the user is authorized, redirect to the upload page
-      redirectUrl = 'https://diabolical.services/upload.html';
+    if (userTeam) {
+      // If the user is part of a team, redirect to their team's upload page
+      redirectUrl = `https://diabolical.services/upload.html?team=${userTeam}`;
     } else {
       // Otherwise, redirect to the homepage
       redirectUrl = 'https://diabolical.services';
     }
+
 
     return {
       statusCode: 303,  // HTTP status code for "See Other"
