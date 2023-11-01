@@ -43,7 +43,7 @@ exports.handler = async (event, context) => {
     }
 
     try {
-        const existingCard = await prisma.card.findUnique({
+        const existingCard = await prisma.card.findFirst({
             where: { teamName: teamNameInSession }
         });
 
