@@ -72,6 +72,7 @@
 .card-info {
   padding: 20px;
   position: absolute;
+  width: -webkit-fill-available;
   bottom: 0;
   color: #fff;
   transform: translateY(40%);
