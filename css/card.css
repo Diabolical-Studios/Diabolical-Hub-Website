@@ -78,6 +78,9 @@
 }
 
 .card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   padding: 20px;
   position: absolute;
   width: -webkit-fill-available;

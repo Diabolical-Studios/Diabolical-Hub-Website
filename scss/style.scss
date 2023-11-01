@@ -98,6 +98,9 @@ $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
 .card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   padding: 20px;
   position: absolute;
   width: -webkit-fill-available;

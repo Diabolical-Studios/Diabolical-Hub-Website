@@ -14,6 +14,7 @@ Vue.component('card', {
         <div class="card-info">
           <slot name="header"></slot>
           <slot name="content"></slot>
+          <slot name="build"></slot>
         </div>
       </div>
     </div>`,
