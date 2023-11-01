@@ -17,6 +17,7 @@ $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   color: #fff;
   z-index: 5;
   position: relative;
+  flex-direction: row-reverse;
 }
 
 .game-icon {

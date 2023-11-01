@@ -146,7 +146,7 @@
                     <card v-for="card in cards" :data-image="card.gameBanner" :key="card.teamName">
 
                         <img slot="icon" :src="card.gameIcon" class="game-icon">
-                        <h4 slot="team">{{ card.teamName }}</h4>
+                        <h4 slot="team" style="font-weight: 300;">{{ card.teamName }}</h4>
 
                         <h2 slot="header">{{ card.gameName }}</h2>
                         <p slot="content">{{ card.gameDescription }}</p>

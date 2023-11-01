@@ -14,6 +14,7 @@
   color: #fff;
   z-index: 5;
   position: relative;
+  flex-direction: row-reverse;
 }
 
 .game-icon {
