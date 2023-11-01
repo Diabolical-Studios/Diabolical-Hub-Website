@@ -109,21 +109,23 @@
         }
     </script>
 
-
-
-
     <style>
         body {
             background-color: #222222;
+            font-family: 'Poppins', sans-serif;
         }
 
         #upload-form {
             background-color: rgba(255, 255, 255, 0.1);
-            /* Transparent background */
             border-radius: 8px;
             padding: 20px;
             width: -webkit-fill-available;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s;
+        }
+
+        #upload-form:hover {
+            transform: translateY(-3px);
         }
 
         #upload-form label {
@@ -143,19 +145,19 @@
             border-radius: 4px;
             border: 1px solid #ccc;
             background-color: rgba(255, 255, 255, 0.2);
-            /* Slightly transparent background */
-            color: #ffffff;
+            color: #E3B40C;
             font-size: 16px;
         }
 
         #upload-form input[type="submit"] {
             background-color: #008CBA;
-            color: white;
+            color: rgb(255, 255, 255);
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            transition: background-color 0.2s;
         }
 
         #upload-form input[type="submit"]:hover {
@@ -169,9 +171,25 @@
             border-radius: 4px;
             border: 1px solid #ccc;
             background-color: rgba(255, 255, 255, 0.2);
-            /* Slightly transparent background */
-            color: #ffffff;
+            color: #E3B40C;
             font-size: 16px;
+        }
+
+        #upload-form option {
+            background-color: #333;
+            color: #E3B40C;
+        }
+
+        .hero__title {
+            transition: color 0.2s;
+        }
+
+        .hero__title:hover {
+            color: #E3B40C;
+        }
+
+        textarea {
+            resize: vertical;
         }
     </style>
 
@@ -221,7 +239,12 @@
                     <label for="build-file">Upload Build URL:</label>
                     <input type="url" id="gameBuild" name="gameBuild" required><br><br>
 
-                    <input type="submit" value="Submit">
+                    <a href="#" class="header__btn" onclick="submitForm(event)" style="margin: 0 !important;">
+                        <span class="header__btn-wrapper">
+                            <span class="header__btn-text">Submit</span>
+                        </span>
+                    </a>
+
                 </form>
 
 
@@ -230,6 +253,17 @@
         </div>
 
     </section>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            const form = document.getElementById('upload-form');
+            if (form) {
+                form.dispatchEvent(new Event('submit'));
+            }
+        }
+
+    </script>
 
 </body>
 
