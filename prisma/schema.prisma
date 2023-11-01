@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("mysql://iugsams2gipqukyjku7g:pscale_pw_RAvroqAIFU8CVqQZkmXfGaIR4X15DxNsXZ7FAjdD70o@aws.connect.psdb.cloud/cards?sslaccept=strict")
+  provider = "mysql"
+  url      = env("PLANETSCALE_DATABASE_URL")
 }
 
 model Card {

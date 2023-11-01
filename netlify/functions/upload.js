@@ -1,13 +1,13 @@
 const { PrismaClient } = require('@prisma/client');
 
+const prisma = new PrismaClient();
+
 exports.handler = async (event, context) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   const data = JSON.parse(event.body);
-
-  const prisma = new PrismaClient();
 
   try {
     const result = await prisma.card.create({ data: data });
@@ -18,7 +18,7 @@ exports.handler = async (event, context) => {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to save data' }),
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };
