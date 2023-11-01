@@ -19,36 +19,53 @@
         rel="stylesheet">
 
     <script>
-        // This will ensure the script runs after the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('upload-form');
-            if (form) {  // Check if the element was found before proceeding
-                form.addEventListener('submit', async (event) => {
-                    event.preventDefault();
+        // Grab the form element by its ID
+        const form = document.getElementById('upload-form');
 
-                    const formData = new FormData(event.target);
-                    const response = await fetch('/.netlify/functions/upload', {
-                        method: 'POST',
-                        body: formData,
-                    });
+        // Attach an event listener to the form's submit event
+        form.addEventListener('submit', async (event) => {
+            // Prevent the default form submission behavior
+            event.preventDefault();
 
+            // Create a new FormData object using the form that triggered the event
+            const formData = new FormData(event.target);
 
-                    if (response.ok) {
-                        const result = await response.json();
-                        console.log(result);
-                        window.location.href = '/';  // Redirect to the main page
-                    } else {
-                        console.error('Upload failed:', response.statusText);
-                        // Display an error message
-                        const errorMessage = document.createElement('div');
-                        errorMessage.textContent = `Upload failed: ${response.statusText}`;
-                        document.body.appendChild(errorMessage);
-                    }
+            // Extract data from the form
+            const jsonData = {
+                teamName: formData.get('teamName'),
+                gameDescription: formData.get('gameDescription'),
+                gameBanner: formData.get('gameBanner'),
+                // Add more fields if there are any
+            };
+
+            try {
+                // Send the data to the server using the Fetch API
+                const response = await fetch('/.netlify/functions/upload', {
+                    method: 'POST',
+                    body: JSON.stringify(jsonData),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 });
-            } else {
-                console.error('Form element not found');
+
+                // Check if the response is ok
+                if (!response.ok) {
+                    throw new Error(`Server returned status: ${response.status}`);
+                }
+
+                // Parse the JSON response from the server
+                const data = await response.json();
+
+                // Handle the server response (e.g., update the UI or navigate to another page)
+                console.log(data);
+                alert('Data uploaded successfully!');
+            } catch (error) {
+                // Handle any errors that occurred during the fetch
+                console.error('Error uploading data:', error);
+                alert('Failed to upload data. Please try again later.');
             }
         });
+
     </script>
 
 

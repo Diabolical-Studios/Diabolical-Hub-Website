@@ -31,7 +31,7 @@
         async function loadCards() {
             const response = await fetch('/data.json', { cache: 'no-store' });
             const data = await response.json();
-            const cardContainer = document.getElementById('app');  // Update the container ID here
+            const cardContainer = document.getElementById('app');
             data.cards.forEach(card => {
                 const cardElement = document.createElement('card');
                 cardElement.setAttribute('data-image', card.gameBanner);
