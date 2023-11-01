@@ -35,7 +35,7 @@ exports.handler = async function (event, context) {
     let redirectUrl;
     if (authorizedUsers.includes(username)) {
       // If the user is authorized, redirect to the upload page
-      redirectUrl = 'https://diabolical.services/upload';
+      redirectUrl = 'https://diabolical.services/upload.html';
     } else {
       // Otherwise, redirect to the homepage
       redirectUrl = 'https://diabolical.services';

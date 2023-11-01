@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Noctis</title>
+    <link rel="icon" href="favicon.png">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/card.css" rel="stylesheet">
+    <script defer="defer" src="cards.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        function startGitHubAuth() {
+            const client_id = "f64b9bcd2b2d41051d93";
+            const redirect_uri = encodeURIComponent(window.location.origin + "/.netlify/functions/github-auth");
+            const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}`;
+            window.location.href = githubAuthUrl;
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body class="no-scrollz">
+
+    <section class="intro">
+
+        <div class="intro__background slide" id="slide1">
+
+            <div style="
+            width: 100%;
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+            z-index: 3;
+            mix-blend-mode: darken;
+            "></div>
+
+
+            <!-- <img src="../assets/gifs/JellyMod.gif" alt="" class="intro-star">
+
+            <picture style="width: 100%; height: 100%; position: absolute;">
+                <img src="../assets/images/Background_NoctisYeaaah.jpg" alt="background" class="intro-back">
+            </picture> -->
+
+            <div class="hero__content">
+                <div class="hero__title-wrapper" style="display: flex; gap: 20px;">
+
+                    <h1 class="hero__title" title="upload" style="color: #E3B40C;">upload</h1>
+                    <h2 class="hero__title">game</h2>
+
+                </div>
+
+                <div id="app" class="card-container" style="z-index: 5;">
+                    <card data-image="../assets/images/BozoBrawl.png">
+                        <h2 slot="header">Diabolical Studios</h2>
+                        <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    </card>
+                    <card
+                        data-image="https://images.unsplash.com/photo-1479659929431-4342107adfc1?dpr=2&auto=compress,format&fit=crop&w=1199&h=799&q=80&cs=tinysrgb&crop=">
+                        <h2 slot="header">Random Team #1</h2>
+                        <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    </card>
+                    <card
+                        data-image="https://images.unsplash.com/photo-1479644025832-60dabb8be2a1?dpr=2&auto=compress,format&fit=crop&w=1199&h=799&q=80&cs=tinysrgb&crop=">
+                        <h2 slot="header">Random Team #2</h2>
+                        <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    </card>
+                    <card
+                        data-image="https://images.unsplash.com/photo-1479621051492-5a6f9bd9e51a?dpr=2&auto=compress,format&fit=crop&w=1199&h=811&q=80&cs=tinysrgb&crop=">
+                        <h2 slot="header">Random Team #3</h2>
+                        <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    </card>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>
