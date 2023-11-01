@@ -51,12 +51,13 @@ exports.handler = async function (event, context) {
     // Store session in the database
     await prisma.session.create({
       data: {
-        id: sessionID,
+        sessionId: sessionID,  // Use sessionID for sessionId field
         username: username,
         teamName: userTeam,
-        expiry: expiryTime
+        expiryTime: expiryTime  // Changed from 'expiry' to 'expiryTime' based on your model
       }
     });
+
 
     let redirectUrl;
     if (userTeam) {
