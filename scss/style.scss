@@ -9,12 +9,17 @@ $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   text-align: center;
 }
 
-.game-icon {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 50px;
+.card-header {
+  display: flex;
+  margin: 12px;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
   z-index: 5;
+}
+
+.game-icon {
+  width: 50px;
 }
 
 .card-container {

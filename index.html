@@ -144,8 +144,10 @@
 
                 <div id="app" class="card-container" style="z-index: 5;">
                     <card v-for="card in cards" :data-image="card.gameBanner" :key="card.teamName">
+                        
+                        <h4 slot="team">{{ card.teamName }}</h4>
                         <img slot="icon" :src="card.gameIcon" class="game-icon">
-                        <p slot="team">{{ card.teamName }}</p>
+
                         <h2 slot="header">{{ card.gameName }}</h2>
                         <p slot="content">{{ card.gameDescription }}</p>
                         <a slot="build" :href="card.gameBuild" download class="header__btn" data-clone="mint-btn" style="margin: 0 !important;">
