@@ -51,9 +51,10 @@ Vue.component('card', {
         },
         cardBgImage() {
             return {
-                backgroundImage: `url(${this.dataImage})`
+                'background-image': `url(${this.dataImage})`
             }
         }
+        
     },
     methods: {
         handleMouseMove(e) {
