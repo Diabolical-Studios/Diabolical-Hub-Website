@@ -17,24 +17,25 @@ exports.handler = async (event, context) => {
         return { statusCode: 401, body: 'No session ID provided.' };
     }
 
-    // Here's the change:
     const session = await prisma.session.findUnique({
-        where: { sessionId: sessionID } // Use sessionId instead of id
+        where: { sessionId: sessionID }
     });
 
-    if (!session || new Date() > session.expiryTime) { // Note: Make sure the field name is expiryTime, as per your schema
+    if (!session || new Date() > session.expiryTime) {
         return { statusCode: 401, body: 'Invalid or expired session.' };
     }
 
     const data = JSON.parse(event.body);
 
-    const username = session.username; // Fetch username from the session.
+    const username = session.username;
     console.log('Fetched GitHub Username:', username);
-    const teamFromUrl = event.queryStringParameters.team;
 
-    const teamName = await getTeamForUsername(username);
+    const teamNameInSession = session.teamName; // Directly fetch team from session
+    console.log('Fetched GitHub Team from session:', teamNameInSession);
 
-    if (!teamName || teamName !== teamFromUrl) {
+    const authorizedTeamName = await getTeamForUsername(username);
+
+    if (!authorizedTeamName || authorizedTeamName !== teamNameInSession) {
         return {
             statusCode: 403,
             body: JSON.stringify({ error: 'User is not authorized to upload for this team.' }),
@@ -43,13 +44,13 @@ exports.handler = async (event, context) => {
 
     try {
         const existingCard = await prisma.card.findUnique({
-            where: { teamName: teamName }
+            where: { teamName: teamNameInSession }
         });
 
         let result;
         if (existingCard) {
             result = await prisma.card.update({
-                where: { teamName: teamName },
+                where: { teamName: teamNameInSession },
                 data: data
             });
         } else {
