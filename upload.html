@@ -29,11 +29,9 @@
                     const formData = new FormData(event.target);
                     const response = await fetch('/.netlify/functions/upload', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        },
                         body: formData,
                     });
+
 
                     if (response.ok) {
                         const result = await response.json();
