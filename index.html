@@ -28,27 +28,32 @@
     </script>
 
     <script>
-        // This script should be in index.html or a separate JavaScript file included in index.html
         async function loadCards() {
-            const response = await fetch('/data.json');  // Adjust the URL to point to your data.json file
+            const response = await fetch('/data.json', { cache: 'no-store' });
             const data = await response.json();
-            const cardContainer = document.getElementById('card-container');
+            const cardContainer = document.getElementById('app');  // Update the container ID here
             data.cards.forEach(card => {
-                const cardElement = document.createElement('div');
-                cardElement.className = 'card';
-                cardElement.innerHTML = `
-            <img src="${card.gameBanner}" alt="${card.gameName}">
-            <h2>${card.teamName}</h2>
-            <p>${card.gameDescription}</p>
-        `;
+                const cardElement = document.createElement('card');
+                cardElement.setAttribute('data-image', card.gameBanner);
+
+                const header = document.createElement('h2');
+                header.setAttribute('slot', 'header');
+                header.textContent = card.teamName;
+
+                const content = document.createElement('p');
+                content.setAttribute('slot', 'content');
+                content.textContent = card.gameDescription;
+
+                cardElement.appendChild(header);
+                cardElement.appendChild(content);
                 cardContainer.appendChild(cardElement);
             });
         }
 
         // Call the function when the page loads
         loadCards();
-
     </script>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

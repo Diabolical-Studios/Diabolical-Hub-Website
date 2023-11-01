@@ -24,7 +24,7 @@
             event.preventDefault();
 
             const formData = new FormData(event.target);
-            const response = await fetch('/upload.html', {
+            const response = await fetch('/.netlify/functions/upload', {  // Update the URL here
                 method: 'POST',
                 body: formData,
             });
@@ -35,10 +35,14 @@
                 window.location.href = '/';  // Redirect to the main page
             } else {
                 console.error('Upload failed:', response.statusText);
-                // TODO: Handle error (e.g., show an error message)
+                // Display an error message
+                const errorMessage = document.createElement('div');
+                errorMessage.textContent = `Upload failed: ${response.statusText}`;
+                document.body.appendChild(errorMessage);
             }
         });
     </script>
+
 
     <style>
         body {
