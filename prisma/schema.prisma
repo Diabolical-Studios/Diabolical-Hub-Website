@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("mysql://iugsams2gipqukyjku7g:pscale_pw_RAvroqAIFU8CVqQZkmXfGaIR4X15DxNsXZ7FAjdD70o@aws.connect.psdb.cloud/cards?sslaccept=strict")
 }
 

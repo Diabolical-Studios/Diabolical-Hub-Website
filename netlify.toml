@@ -1,4 +1,3 @@
 [build]
   functions = "netlify/functions"
-  public = "netlify/public"
   command = "npm run generate"
