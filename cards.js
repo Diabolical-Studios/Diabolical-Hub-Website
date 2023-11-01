@@ -9,7 +9,7 @@ Vue.component('card', {
       ref="card">
       <div class="card"
         :style="cardStyle">
-        <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>  <!-- This line has been adjusted -->
+        <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
         <div class="card-info">
           <slot name="header"></slot>
           <slot name="content"></slot>
@@ -50,10 +50,8 @@ Vue.component('card', {
             }
         },
         cardBgImage() {
-            return {
-                backgroundImage: `url(${this.dataImage})`
-            }
-        }        
+            return { backgroundImage: 'url(' + this.dataImage + ')' };
+        }
     },
     methods: {
         handleMouseMove(e) {
