@@ -8,12 +8,15 @@ exports.handler = async (event, context) => {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
+    console.log('Received Event:', event);  // <-- Log the entire event 
+
     const data = JSON.parse(event.body);
 
     // Get the username and team from the request
     const username = event.queryStringParameters.username;
-    console.log('Username from request:', username); // <-- Add this line to print the username
+    console.log('Username from request:', username);
     const teamFromUrl = event.queryStringParameters.team;
+    console.log('Team from request:', teamFromUrl);  // <-- Log the team from the URL
 
     // Identify the team of the user
     const teamName = await getTeamForUsername(username);

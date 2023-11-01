@@ -5,6 +5,8 @@ exports.handler = async function (event, context) {
   const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
   const code = event.queryStringParameters.code;
 
+  console.log('Received Event:', event);  // <-- Log the entire event 
+
   try {
     const tokenResponse = await axios.post('https://github.com/login/oauth/access_token', {
       client_id: CLIENT_ID,
@@ -27,6 +29,8 @@ exports.handler = async function (event, context) {
     });
 
     const username = userResponse.data.login;
+    console.log('Fetched GitHub Username:', username);  // <-- Log the GitHub username
+
 
     // Load the list of authorized usernames
     const teamAssignmentsResponse = await axios.get('https://diabolical.services/authorized_users.json');
@@ -49,6 +53,8 @@ exports.handler = async function (event, context) {
       // Otherwise, redirect to the homepage
       redirectUrl = 'https://diabolical.services';
     }
+
+    console.log('Redirect URL:', redirectUrl);  // <-- Log the final redirect URL
 
 
     return {
