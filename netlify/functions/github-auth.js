@@ -1,8 +1,8 @@
 const axios = require('axios');
-const CLIENT_ID = "f64b9bcd2b2d41051d93";
-const CLIENT_SECRET = "1fa363a874c7ba1fab001b12d31dde97ee76cf2c";
 
 exports.handler = async function(event, context) {
+    const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+    const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
     const code = event.queryStringParameters.code;
 
     try {
