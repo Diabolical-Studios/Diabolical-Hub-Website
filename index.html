@@ -54,9 +54,13 @@
                     icon.setAttribute('slot', 'icon');
                     icon.textContent = card.gameIcon;
 
+                    const team = document.createElement('p');
+                    team.setAttribute('slot', 'team');
+                    team.textContent = card.teamName;
+
                     const header = document.createElement('h2');
                     header.setAttribute('slot', 'header');
-                    header.textContent = card.teamName;
+                    header.textContent = card.gameName;
 
                     const content = document.createElement('p');
                     content.setAttribute('slot', 'content');
@@ -141,7 +145,8 @@
                 <div id="app" class="card-container" style="z-index: 5;">
                     <card v-for="card in cards" :data-image="card.gameBanner" :key="card.teamName">
                         <img slot="icon" :src="card.gameIcon" class="game-icon">
-                        <h2 slot="header">{{ card.teamName }}</h2>
+                        <p slot="team">{{ card.teamName }}</p>
+                        <h2 slot="header">{{ card.gameName }}</h2>
                         <p slot="content">{{ card.gameDescription }}</p>
                         <a slot="build" :href="card.gameBuild" download class="header__btn" data-clone="mint-btn" style="margin: 0 !important;">
                             <span class="header__btn-wrapper">

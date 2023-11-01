@@ -10,6 +10,7 @@ Vue.component('card', {
       <div class="card"
         :style="cardStyle">
         <slot name="icon"></slot>
+        <slot name="team"></slot>
         <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
         <div class="card-info">
           <slot name="header"></slot>
