@@ -58,13 +58,9 @@ exports.handler = async (event, context) => {
         }
 
         return {
-            statusCode: 302,  // Changed from 200 to 302
-            headers: {
-                "Location": "/",  // Assuming '/' is your homepage
-            },
+            statusCode: 200,
             body: JSON.stringify({ message: 'Data uploaded successfully', result: result }),
         };
-
 
     } catch (error) {
         return {
