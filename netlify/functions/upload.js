@@ -50,7 +50,7 @@ exports.handler = async (event, context) => {
         let result;
         if (existingCard) {
             result = await prisma.card.update({
-                where: { teamName: teamNameInSession },
+                where: { id: existingCard.id }, // Use the `id` of the existing card for the update
                 data: data
             });
         } else {
