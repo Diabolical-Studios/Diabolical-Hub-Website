@@ -4,18 +4,18 @@ const fs = require('fs');
 const path = require('path');
 
 exports.handler = async function (event, context) {
-
-    console.log(JSON.stringify(event, null, 2));
-
     // Check for POST method
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
+    // Decode event body if base64-encoded
+    let body = event.isBase64Encoded ? Buffer.from(event.body, 'base64') : event.body;
+
     const form = new formidable.IncomingForm();
 
     return new Promise((resolve, reject) => {
-        form.parse(event.body, (err, fields, files) => {
+        form.parse(body, (err, fields, files) => {
             // Handle form parsing error
             if (err) reject({ statusCode: 500, body: JSON.stringify(err) });
 
