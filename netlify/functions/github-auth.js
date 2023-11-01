@@ -25,9 +25,15 @@ exports.handler = async function(event, context) {
             }
         });
 
+        // Modify this URL to your main website domain
+        const redirectUrl = `https://diabolical.services/login-success?user=${encodeURIComponent(JSON.stringify(userResponse.data))}`;
+        
         return {
-            statusCode: 200,
-            body: JSON.stringify(userResponse.data),
+            statusCode: 303,  // HTTP status code for "See Other"
+            headers: {
+                Location: redirectUrl
+            },
+            body: ''
         };
 
     } catch (error) {
