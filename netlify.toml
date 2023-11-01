@@ -1,3 +1,4 @@
 [build]
+  command = "prisma generate"
   functions = "netlify/functions"
   public = "netlify/public"
