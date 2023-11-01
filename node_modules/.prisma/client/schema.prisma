@@ -21,3 +21,12 @@ model Card {
   gameBuild        String// This can be a URL/path to the game Build
 }
 
+model Session {
+  id        Int      @id @default(autoincrement()) // Unique identifier for the session table
+  sessionId String   @unique                       // Unique session ID generated for client
+  username  String                                   // GitHub username associated with session
+  teamName  String                                   // Team associated with session
+  expiryTime DateTime                               // Timestamp for when the session expires
+  createdAt DateTime @default(now())                // Timestamp for when the session was created
+}
+

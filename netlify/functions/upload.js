@@ -8,42 +8,49 @@ exports.handler = async (event, context) => {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
-    console.log('Received Event:', event);  // <-- Log the entire event 
+    console.log('Received Event:', event);
+
+    const sessionCookie = event.headers.cookie && event.headers.cookie.match(/sessionID=([^;]+);?/);
+    const sessionID = sessionCookie && sessionCookie[1];
+
+    if (!sessionID) {
+        return { statusCode: 401, body: 'No session ID provided.' };
+    }
+
+    const session = await prisma.session.findUnique({
+        where: { id: sessionID }
+    });
+
+    if (!session || new Date() > session.expiry) {
+        return { statusCode: 401, body: 'Invalid or expired session.' };
+    }
 
     const data = JSON.parse(event.body);
 
-    // Get the username and team from the request
-    const username = event.queryStringParameters.username;
-    console.log('Username from request:', username);
+    const username = session.username; // Fetch username from the session.
     const teamFromUrl = event.queryStringParameters.team;
-    console.log('Team from request:', teamFromUrl);  // <-- Log the team from the URL
 
-    // Identify the team of the user
     const teamName = await getTeamForUsername(username);
-
 
     if (!teamName || teamName !== teamFromUrl) {
         return {
-            statusCode: 403,  // Forbidden
+            statusCode: 403,
             body: JSON.stringify({ error: 'User is not authorized to upload for this team.' }),
         };
     }
 
     try {
-        // Check if a card for that team already exists
         const existingCard = await prisma.card.findUnique({
             where: { teamName: teamName }
         });
 
         let result;
         if (existingCard) {
-            // Update the existing card
             result = await prisma.card.update({
                 where: { teamName: teamName },
                 data: data
             });
         } else {
-            // Create a new card
             result = await prisma.card.create({ data: data });
         }
 

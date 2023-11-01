@@ -1,11 +1,13 @@
 const axios = require('axios');
+const { PrismaClient } = require('@prisma/client');
+const { v4: uuidv4 } = require('uuid');  // <-- Import UUID library to generate unique session IDs
+
+const prisma = new PrismaClient();
 
 exports.handler = async function (event, context) {
   const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
   const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
   const code = event.queryStringParameters.code;
-
-  console.log('Received Event:', event);  // <-- Log the entire event 
 
   try {
     const tokenResponse = await axios.post('https://github.com/login/oauth/access_token', {
@@ -42,31 +44,38 @@ exports.handler = async function (event, context) {
         userTeam = team;
         break;
       }
-    }
+    } let sessionID = uuidv4();  // <-- Generate a unique session ID
+    const expiryTime = new Date();
+    expiryTime.setHours(expiryTime.getHours() + 24);  // <-- Set session expiry to 24 hours from now
 
+    // Store session in the database
+    await prisma.session.create({
+      data: {
+        id: sessionID,
+        username: username,
+        teamName: userTeam,
+        expiry: expiryTime
+      }
+    });
 
     let redirectUrl;
     if (userTeam) {
-      // If the user is part of a team, redirect to their team's upload page with their username
       redirectUrl = `https://diabolical.services/upload.html?team=${userTeam}&username=${username}`;
     } else {
-      // Otherwise, redirect to the homepage
       redirectUrl = 'https://diabolical.services';
     }
 
-    console.log('Redirect URL:', redirectUrl);  // <-- Log the final redirect URL
-
-
     return {
-      statusCode: 303,  // HTTP status code for "See Other"
+      statusCode: 303,
       headers: {
+        'Set-Cookie': `sessionID=${sessionID}; HttpOnly; Secure; SameSite=Strict; Expires=${expiryTime.toUTCString()}`,  // <-- Set session ID in a secure, httpOnly cookie
         Location: redirectUrl
       },
       body: ''
     };
 
   } catch (error) {
-    console.error('Error: ', error.response ? error.response.data : error.message);  // Log the full error response
+    console.error('Error: ', error.response ? error.response.data : error.message);
     return {
       statusCode: error.response ? error.response.status : 500,
       body: JSON.stringify({ error: error.response ? error.response.data : error.message }),
