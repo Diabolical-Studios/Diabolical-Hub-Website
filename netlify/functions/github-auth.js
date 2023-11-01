@@ -17,19 +17,21 @@ exports.handler = async function(event, context) {
         });
 
         const accessToken = tokenResponse.data.access_token;
-        console.log('Access Token: ', accessToken);  // Log the access token to see if it's retrieved correctly
-        
-        const userResponse = await axios.get('https://api.github.com/user', {
-            headers: {
-                Authorization: `token ${accessToken}`
-            }
-        });
+        console.log('Access Token: ', accessToken); // Log the access token to see if it's retrieved correctly
 
-        // Modify this URL to your main website domain
-        const redirectUrl = `https://diabolical.services/login-success?user=${encodeURIComponent(JSON.stringify(userResponse.data))}`;
-        
+        // If you want to redirect to the main site with the access token
+        const redirectUrl = `https://diabolical.services/?code=${accessToken}`;
+
+        // If you want to redirect to the main site with user info
+        // const userResponse = await axios.get('https://api.github.com/user', {
+        //     headers: {
+        //         Authorization: `token ${accessToken}`
+        //     }
+        // });
+        // const redirectUrl = `https://diabolical.services/login-success?user=${encodeURIComponent(JSON.stringify(userResponse.data))}`;
+
         return {
-            statusCode: 303,  // HTTP status code for "See Other"
+            statusCode: 303, // HTTP status code for "See Other"
             headers: {
                 Location: redirectUrl
             },
@@ -37,7 +39,7 @@ exports.handler = async function(event, context) {
         };
 
     } catch (error) {
-        console.error('Error: ', error.response ? error.response.data : error.message);  // Log the full error response
+        console.error('Error: ', error.response ? error.response.data : error.message); // Log the full error response
         return {
             statusCode: error.response ? error.response.status : 500,
             body: JSON.stringify({ error: error.response ? error.response.data : error.message }),
