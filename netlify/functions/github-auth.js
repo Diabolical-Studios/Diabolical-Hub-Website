@@ -43,8 +43,8 @@ exports.handler = async function (event, context) {
 
     let redirectUrl;
     if (userTeam) {
-      // If the user is part of a team, redirect to their team's upload page
-      redirectUrl = `https://diabolical.services/upload.html?team=${userTeam}`;
+      // If the user is part of a team, redirect to their team's upload page with their username
+      redirectUrl = `https://diabolical.services/upload.html?team=${userTeam}&username=${username}`;
     } else {
       // Otherwise, redirect to the homepage
       redirectUrl = 'https://diabolical.services';
