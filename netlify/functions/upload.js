@@ -17,11 +17,12 @@ exports.handler = async (event, context) => {
         return { statusCode: 401, body: 'No session ID provided.' };
     }
 
+    // Here's the change:
     const session = await prisma.session.findUnique({
-        where: { id: sessionID }
+        where: { sessionId: sessionID } // Use sessionId instead of id
     });
 
-    if (!session || new Date() > session.expiry) {
+    if (!session || new Date() > session.expiryTime) { // Note: Make sure the field name is expiryTime, as per your schema
         return { statusCode: 401, body: 'Invalid or expired session.' };
     }
 
