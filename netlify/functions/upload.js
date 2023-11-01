@@ -1,30 +1,24 @@
-// netlify/functions/upload.js
+const { PrismaClient } = require('@prisma/client');
 
-const fs = require('fs').promises;
-const path = require('path');
-
-exports.handler = async function(event, context) {
+exports.handler = async (event, context) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   const data = JSON.parse(event.body);
-  
-  // Path to your data.json
-  const dataFilePath = path.join(__dirname, 'netlify/public/data.json');
 
-  // Load existing data
-  const rawData = await fs.readFile(dataFilePath, 'utf-8');
-  const jsonData = JSON.parse(rawData);
-  
-  // Push new card data
-  jsonData.cards.push(data);
+  const prisma = new PrismaClient();
 
-  // Save back the data
-  await fs.writeFile(dataFilePath, JSON.stringify(jsonData));
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: "Data added successfully!" }),
-  };
-}
+  try {
+    const result = await prisma.card.create({ data: data });
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Data uploaded successfully', result: result }),
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Failed to save data' }),
+    };
+  }
+};
