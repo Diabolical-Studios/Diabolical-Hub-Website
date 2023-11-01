@@ -11,7 +11,7 @@ exports.handler = async function(event, context) {
   const data = JSON.parse(event.body);
   
   // Path to your data.json
-  const dataFilePath = path.join(__dirname, '../data.json');
+  const dataFilePath = path.join(__dirname, 'data.json');
 
   // Load existing data
   const rawData = await fs.readFile(dataFilePath, 'utf-8');
