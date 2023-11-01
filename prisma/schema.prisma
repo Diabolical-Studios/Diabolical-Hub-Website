@@ -13,10 +13,11 @@ datasource db {
 
 model Card {
   id               Int      @id @default(autoincrement())
+  teamName         String
   gameName         String
   gameDescription  String
   gameIcon         String   // This can be a URL/path to the icon image
   gameBanner       String   // This can be a URL/path to the banner image
-  gameBuildZipFile String   // This can be a URL/path to the zipped build file
+  gameBuild        String   // This can be a URL/path to the zipped build file
 }
 
