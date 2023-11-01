@@ -29,6 +29,7 @@ exports.handler = async (event, context) => {
     const data = JSON.parse(event.body);
 
     const username = session.username; // Fetch username from the session.
+    console.log('Fetched GitHub Username:', username);
     const teamFromUrl = event.queryStringParameters.team;
 
     const teamName = await getTeamForUsername(username);
