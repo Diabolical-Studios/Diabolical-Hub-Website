@@ -23,7 +23,7 @@ exports.handler = async function (event, context) {
             const cardData = { teamName, gameIcon, gameBanner, gameName, gameDescription };
 
             // Resolve file path to data.json
-            const dataFilePath = path.resolve(__dirname, 'data.json');
+            const dataFilePath = path.resolve(__dirname, '../data.json');
 
             // Read existing data from data.json
             const existingData = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
