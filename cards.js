@@ -80,14 +80,24 @@ const app = new Vue({
     async mounted() {
         try {
             const response = await fetch('/.netlify/functions/fetchCards', { cache: 'no-store' });
-            const data = await response.json();
-            if (!data.cards) {
-                console.error("data.cards is not defined:", data);
-                return;
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            this.cards = data.cards;
+
+            const data = await response.json();
+
+            // If data itself is an array, assign it directly
+            if (Array.isArray(data)) {
+                this.cards = data;
+            } else if (Array.isArray(data.cards)) {
+                this.cards = data.cards;
+            } else {
+                console.error("Unexpected data format:", data);
+            }
         } catch (error) {
-            console.error('Error fetching cards:', error);
+            console.error("Error in mounted:", error);
         }
-    }    
+    }
+
 });
