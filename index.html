@@ -139,8 +139,8 @@
 
 
                 <div id="app" class="card-container" style="z-index: 5;">
-                    <img slot="icon" :src="card.gameIcon" class="game-icon">
                     <card v-for="card in cards" :data-image="card.gameBanner" :key="card.teamName">
+                        <img slot="icon" :src="card.gameIcon" class="game-icon">
                         <h2 slot="header">{{ card.teamName }}</h2>
                         <p slot="content">{{ card.gameDescription }}</p>
                     </card>
