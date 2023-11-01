@@ -1,6 +1,6 @@
 const axios = require('axios');
 const CLIENT_ID = "f64b9bcd2b2d41051d93";
-const CLIENT_SECRET = "61922d8a7284c5e4c73b0a1637e93cb150ec08a3";
+const CLIENT_SECRET = "1fa363a874c7ba1fab001b12d31dde97ee76cf2c";
 
 exports.handler = async function(event, context) {
     const code = event.queryStringParameters.code;
