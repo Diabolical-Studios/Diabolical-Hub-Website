@@ -19,54 +19,61 @@
         rel="stylesheet">
 
     <script>
-        // Grab the form element by its ID
-        const form = document.getElementById('upload-form');
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Grab the form element by its ID
+            const form = document.getElementById('upload-form');
 
-        // Attach an event listener to the form's submit event
-        form.addEventListener('submit', async (event) => {
-            // Prevent the default form submission behavior
-            event.preventDefault();
+            // Check if the form is not null before attaching the event listener
+            if (form) {
+                // Attach an event listener to the form's submit event
+                form.addEventListener('submit', async (event) => {
+                    // Prevent the default form submission behavior
+                    event.preventDefault();
 
-            // Create a new FormData object using the form that triggered the event
-            const formData = new FormData(event.target);
+                    // Create a new FormData object using the form that triggered the event
+                    const formData = new FormData(event.target);
 
-            // Extract data from the form
-            const jsonData = {
-                teamName: formData.get('teamName'),
-                gameDescription: formData.get('gameDescription'),
-                gameBanner: formData.get('gameBanner'),
-                // Add more fields if there are any
-            };
+                    // Extract data from the form
+                    const jsonData = {
+                        teamName: formData.get('teamName'),
+                        gameDescription: formData.get('gameDescription'),
+                        gameBanner: formData.get('gameBanner'),
+                        // Add more fields if there are any
+                    };
 
-            try {
-                // Send the data to the server using the Fetch API
-                const response = await fetch('/.netlify/functions/upload', {
-                    method: 'POST',
-                    body: JSON.stringify(jsonData),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    try {
+                        // Send the data to the server using the Fetch API
+                        const response = await fetch('/.netlify/functions/upload', {
+                            method: 'POST',
+                            body: JSON.stringify(jsonData),
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
+
+                        // Check if the response is ok
+                        if (!response.ok) {
+                            throw new Error(`Server returned status: ${response.status}`);
+                        }
+
+                        // Parse the JSON response from the server
+                        const data = await response.json();
+
+                        // Handle the server response (e.g., update the UI or navigate to another page)
+                        console.log(data);
+                        alert('Data uploaded successfully!');
+                    } catch (error) {
+                        // Handle any errors that occurred during the fetch
+                        console.error('Error uploading data:', error);
+                        alert('Failed to upload data. Please try again later.');
+                    }
                 });
-
-                // Check if the response is ok
-                if (!response.ok) {
-                    throw new Error(`Server returned status: ${response.status}`);
-                }
-
-                // Parse the JSON response from the server
-                const data = await response.json();
-
-                // Handle the server response (e.g., update the UI or navigate to another page)
-                console.log(data);
-                alert('Data uploaded successfully!');
-            } catch (error) {
-                // Handle any errors that occurred during the fetch
-                console.error('Error uploading data:', error);
-                alert('Failed to upload data. Please try again later.');
+            } else {
+                console.error('upload-form not found in the document.');
             }
         });
-
     </script>
+
 
 
 
