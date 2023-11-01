@@ -29,29 +29,43 @@
 
     <script>
         async function loadCards() {
-            const response = await fetch('/.netlify/functions/fetchCards', { cache: 'no-store' });
-            const data = await response.json();
-            const cardContainer = document.getElementById('app');
-            data.cards.forEach(card => {
-                const cardElement = document.createElement('card');
-                cardElement.setAttribute('data-image', card.gameBanner);
+            try {
+                const response = await fetch('/.netlify/functions/fetchCards', { cache: 'no-store' });
 
-                const header = document.createElement('h2');
-                header.setAttribute('slot', 'header');
-                header.textContent = card.teamName;
+                // Check if response was successful
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
 
-                const content = document.createElement('p');
-                content.setAttribute('slot', 'content');
-                content.textContent = card.gameDescription;
+                const data = await response.json();
 
-                cardElement.appendChild(header);
-                cardElement.appendChild(content);
-                cardContainer.appendChild(cardElement); 
-            });
+                // Ensure that data.cards is defined and is an array
+                if (!Array.isArray(data.cards)) {
+                    console.error("Expected data.cards to be an array, but received:", data.cards);
+                    return;
+                }
+
+                const cardContainer = document.getElementById('app');
+                data.cards.forEach(card => {
+                    const cardElement = document.createElement('card');
+                    cardElement.setAttribute('data-image', card.gameBanner);
+
+                    const header = document.createElement('h2');
+                    header.setAttribute('slot', 'header');
+                    header.textContent = card.teamName;
+
+                    const content = document.createElement('p');
+                    content.setAttribute('slot', 'content');
+                    content.textContent = card.gameDescription;
+
+                    cardElement.appendChild(header);
+                    cardElement.appendChild(content);
+                    cardContainer.appendChild(cardElement);
+                });
+            } catch (error) {
+                console.error("Error in loadCards:", error);
+            }
         }
-
-        // Call the function when the page loads
-        loadCards();
     </script>
 
 
