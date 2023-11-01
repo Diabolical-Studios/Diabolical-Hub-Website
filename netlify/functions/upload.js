@@ -12,10 +12,12 @@ exports.handler = async (event, context) => {
 
     // Get the username and team from the request
     const username = data.username;
+    console.log('Username from request:', username); // <-- Add this line to print the username
     const teamFromUrl = event.queryStringParameters.team;
 
     // Identify the team of the user
     const teamName = await getTeamForUsername(username);
+
 
     if (!teamName || teamName !== teamFromUrl) {
         return {
