@@ -46,7 +46,7 @@
 
                 cardElement.appendChild(header);
                 cardElement.appendChild(content);
-                cardContainer.appendChild(cardElement);
+                cardContainer.appendChild(cardElement); 
             });
         }
 
@@ -121,27 +121,11 @@
 
 
                 <div id="app" class="card-container" style="z-index: 5;">
-                    <card data-image="../assets/images/BozoBrawl.png">
-                        <h2 slot="header">Diabolical Studios</h2>
-                        <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    </card>
-                    <card
-                        data-image="https://images.unsplash.com/photo-1479659929431-4342107adfc1?dpr=2&auto=compress,format&fit=crop&w=1199&h=799&q=80&cs=tinysrgb&crop=">
-                        <h2 slot="header">Random Team #1</h2>
-                        <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    </card>
-                    <card
-                        data-image="https://images.unsplash.com/photo-1479644025832-60dabb8be2a1?dpr=2&auto=compress,format&fit=crop&w=1199&h=799&q=80&cs=tinysrgb&crop=">
-                        <h2 slot="header">Random Team #2</h2>
-                        <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    </card>
-                    <card
-                        data-image="https://images.unsplash.com/photo-1479621051492-5a6f9bd9e51a?dpr=2&auto=compress,format&fit=crop&w=1199&h=811&q=80&cs=tinysrgb&crop=">
-                        <h2 slot="header">Random Team #3</h2>
-                        <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <card v-for="card in cards" :data-image="card.gameBanner" :key="card.teamName">
+                        <h2 slot="header">{{ card.teamName }}</h2>
+                        <p slot="content">{{ card.gameDescription }}</p>
                     </card>
                 </div>
-
 
             </div>
 
