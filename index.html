@@ -27,6 +27,29 @@
         }
     </script>
 
+    <script>
+        // This script should be in index.html or a separate JavaScript file included in index.html
+        async function loadCards() {
+            const response = await fetch('/data.json');  // Adjust the URL to point to your data.json file
+            const data = await response.json();
+            const cardContainer = document.getElementById('card-container');
+            data.cards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.innerHTML = `
+            <img src="${card.gameBanner}" alt="${card.gameName}">
+            <h2>${card.teamName}</h2>
+            <p>${card.gameDescription}</p>
+        `;
+                cardContainer.appendChild(cardElement);
+            });
+        }
+
+        // Call the function when the page loads
+        loadCards();
+
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
@@ -88,9 +111,12 @@
 
                 </div>
 
+                <!-- This part should be in index.html -->
+                <div id="card-container"></div>
+
+
                 <div id="app" class="card-container" style="z-index: 5;">
-                    <card
-                        data-image="../assets/images/BozoBrawl.png">
+                    <card data-image="../assets/images/BozoBrawl.png">
                         <h2 slot="header">Diabolical Studios</h2>
                         <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     </card>
