@@ -1,5 +1,5 @@
 // upload.js
-const formidable = require('formidable');
+const Busboy = require('busboy');
 const fs = require('fs');
 const path = require('path');
 
@@ -9,16 +9,28 @@ exports.handler = async function (event, context) {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
-    // Decode event body if base64-encoded
-    let body = event.isBase64Encoded ? Buffer.from(event.body, 'base64') : event.body;
-
-    const form = new formidable.IncomingForm();
+    const contentType = event.headers['content-type'];
+    if (!contentType) {
+        return { statusCode: 400, body: 'Invalid content type' };
+    }
 
     return new Promise((resolve, reject) => {
-        form.parse(event, (err, fields, files) => {
-            // Handle form parsing error
-            if (err) reject({ statusCode: 500, body: JSON.stringify(err) });
+        const busboy = new Busboy({ headers: { 'content-type': contentType } });
 
+        let fields = {};
+        let files = {};
+
+        busboy.on('field', (fieldname, value) => {
+            fields[fieldname] = value;
+        });
+
+        busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+            const uploadPath = path.join(__dirname, 'uploads', filename);
+            file.pipe(fs.createWriteStream(uploadPath));
+            files[fieldname] = { filename, encoding, mimetype };
+        });
+
+        busboy.on('finish', () => {
             // Destructure form fields
             const { teamName, gameIcon, gameBanner, gameName, gameDescription } = fields;
 
@@ -43,5 +55,10 @@ exports.handler = async function (event, context) {
                 body: JSON.stringify({ success: true }),
             });
         });
+
+        busboy.on('error', error => reject({ statusCode: 500, body: JSON.stringify(error) }));
+
+        busboy.write(event.body, 'binary');
+        busboy.end();
     });
 };
