@@ -4,6 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 exports.handler = async function (event, context) {
+
+    console.log(JSON.stringify(event, null, 2));
+
     // Check for POST method
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
@@ -12,7 +15,6 @@ exports.handler = async function (event, context) {
     const form = new formidable.IncomingForm();
 
     return new Promise((resolve, reject) => {
-        console.log(event.body);
         form.parse(event.body, (err, fields, files) => {
             // Handle form parsing error
             if (err) reject({ statusCode: 500, body: JSON.stringify(err) });
