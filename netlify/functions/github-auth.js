@@ -30,7 +30,7 @@ exports.handler = async function (event, context) {
 
     // Load the list of authorized usernames
     const teamAssignmentsResponse = await axios.get('https://diabolical.services/authorized_users.json');
-    const teamAssignments = JSON.parse(teamAssignmentsResponse.data);
+    const teamAssignments = teamAssignmentsResponse.data;
 
     let userTeam = null;
     for (const [team, users] of Object.entries(teamAssignments)) {
