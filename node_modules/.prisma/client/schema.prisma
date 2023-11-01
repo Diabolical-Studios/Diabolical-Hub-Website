@@ -18,6 +18,5 @@ model Card {
   gameDescription  String
   gameIcon         String   // This can be a URL/path to the icon image
   gameBanner       String   // This can be a URL/path to the banner image
-  gameBuild        String   // This can be a URL/path to the zipped build file
 }
 
