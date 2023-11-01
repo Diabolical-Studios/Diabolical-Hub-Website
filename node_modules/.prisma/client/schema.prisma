@@ -1,0 +1,21 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("mysql://iugsams2gipqukyjku7g:pscale_pw_RAvroqAIFU8CVqQZkmXfGaIR4X15DxNsXZ7FAjdD70o@aws.connect.psdb.cloud/cards?sslaccept=strict")
+}
+
+model Card {
+  id               Int      @id @default(autoincrement())
+  gameName         String
+  gameDescription  String
+  gameIcon         String   // This can be a URL/path to the icon image
+  gameBanner       String   // This can be a URL/path to the banner image
+  gameBuildZipFile String   // This can be a URL/path to the zipped build file
+}
+
