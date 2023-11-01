@@ -9,36 +9,43 @@
     background-position: 50px 50px;
   }
 }
+
 @-moz-keyframes bg-scrolling-reverse {
   100% {
     background-position: 50px 50px;
   }
 }
+
 @-o-keyframes bg-scrolling-reverse {
   100% {
     background-position: 50px 50px;
   }
 }
+
 @keyframes bg-scrolling-reverse {
   100% {
     background-position: 50px 50px;
   }
 }
+
 @-webkit-keyframes bg-scrolling {
   0% {
     background-position: 50px 50px;
   }
 }
+
 @-moz-keyframes bg-scrolling {
   0% {
     background-position: 50px 50px;
   }
 }
+
 @-o-keyframes bg-scrolling {
   0% {
     background-position: 50px 50px;
   }
 }
+
 @keyframes bg-scrolling {
   0% {
     background-position: 50px 50px;
@@ -63,7 +70,8 @@
 }
 
 
-.hero__title-wrapper h1::after, h1::before {
+.hero__title-wrapper h1::after,
+h1::before {
   content: attr(title);
   position: absolute;
   left: 0;
@@ -415,6 +423,12 @@ body::-webkit-scrollbar-thumb:hover,
   letter-spacing: 12px;
 }
 
+@media (max-width: 768px) {
+  .intro_coordinates {
+    display: none;
+  }
+}
+
 .hero__letters {
   max-width: 30%;
   position: absolute;
@@ -426,6 +440,27 @@ body::-webkit-scrollbar-thumb:hover,
 
 .hero__title-wrapper {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .hero__title-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hero__content h2 {
+    display: none;
+  }
+
+  .hero__content p {
+    display: block !important;
+    font-size: 24px;
+  }
 }
 
 .hero__title-wrapper h1 {
@@ -441,6 +476,10 @@ body::-webkit-scrollbar-thumb:hover,
   font-size: clamp(4rem, 6vw, 16rem);
   color: #fff;
   line-height: 0.8;
+}
+
+.hero__content p {
+  display: none;
 }
 
 .header {
@@ -466,9 +505,9 @@ body::-webkit-scrollbar-thumb:hover,
   max-width: 300px;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 768px) {
   .header__logo img {
-    max-width: 105px;
+    max-width: 200px;
   }
 }
 
@@ -546,19 +585,6 @@ body::-webkit-scrollbar-thumb:hover,
   }
 }
 
-@media (max-width: 768px) {
-  .header__btn {
-    margin-left: auto;
-    margin-right: 30px;
-  }
-}
-
-@media (max-width: 395px) {
-  .header__btn {
-    margin-right: 15px;
-  }
-}
-
 .header__btn-wrapper {
   position: relative;
   z-index: 3;
@@ -591,5 +617,6 @@ body::-webkit-scrollbar-thumb:hover,
 @media (max-width: 768px) {
   .header__btn-text {
     font-size: 12.6px;
+    white-space: nowrap;
   }
 }

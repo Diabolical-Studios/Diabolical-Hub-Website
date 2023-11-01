@@ -107,8 +107,6 @@
                         </svg>
                     </span>
                 </a>
-
-                <button class="burgermenu" id="burgermenu"></button>
             </div>
         </header>
 
@@ -131,16 +129,13 @@
             </picture> -->
 
             <div class="hero__content">
-                <div class="hero__title-wrapper" style="display: flex; gap: 20px;">
+                <div class="hero__title-wrapper">
 
                     <h1 class="hero__title" title="bug" style="color: #E3B40C;">bug</h1>
                     <h2 class="hero__title">incubation</h2>
+                    <p class="hero__title">Please View From A PC</p>
 
                 </div>
-
-                <!-- This part should be in index.html -->
-                <div id="card-container"></div>
-
 
                 <div id="app" class="card-container" style="z-index: 5;">
                     <card v-for="card in cards" :data-image="card.gameBanner" :key="card.teamName">
