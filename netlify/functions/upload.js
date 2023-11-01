@@ -12,6 +12,7 @@ exports.handler = async function (event, context) {
     const form = new formidable.IncomingForm();
 
     return new Promise((resolve, reject) => {
+        console.log(event.body);
         form.parse(event.body, (err, fields, files) => {
             // Handle form parsing error
             if (err) reject({ statusCode: 500, body: JSON.stringify(err) });
