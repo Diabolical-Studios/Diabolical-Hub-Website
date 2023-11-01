@@ -1,5 +1,4 @@
 const axios = require('axios');
-const fs = require('fs');
 
 exports.handler = async function (event, context) {
   const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
@@ -30,7 +29,8 @@ exports.handler = async function (event, context) {
     const username = userResponse.data.login;
 
     // Load the list of authorized usernames
-    const authorizedUsers = fs.readFileSync('https://diabolical.services/authorized_users.txt', 'utf-8').split('\n');
+    const authorizedUsersResponse = await axios.get('https://diabolical.services/authorized_users.txt');
+    const authorizedUsers = authorizedUsersResponse.data.split('\n');
 
     let redirectUrl;
     if (authorizedUsers.includes(username)) {
