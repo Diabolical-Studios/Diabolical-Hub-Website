@@ -30,7 +30,7 @@ exports.handler = async function (event, context) {
     const username = userResponse.data.login;
 
     // Load the list of authorized usernames
-    const authorizedUsers = fs.readFileSync('authorized_users.txt', 'utf-8').split('\n');
+    const authorizedUsers = fs.readFileSync('https://diabolical.services/authorized_users.txt', 'utf-8').split('\n');
 
     let redirectUrl;
     if (authorizedUsers.includes(username)) {
