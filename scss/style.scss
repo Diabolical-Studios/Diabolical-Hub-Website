@@ -9,6 +9,14 @@ $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   text-align: center;
 }
 
+.game-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 60px;
+  z-index: 5;
+}
+
 .card-container {
   padding: 40px 80px;
   display: flex;

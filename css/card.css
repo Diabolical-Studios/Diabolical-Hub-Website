@@ -6,6 +6,14 @@
   text-align: center;
 }
 
+.game-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 60px;
+  z-index: 5;
+}
+
 .card-container {
   padding: 40px 80px;
   display: flex;
