@@ -146,22 +146,11 @@
                     <card v-for="card in cards" :data-image="card.gameBanner" :key="card.teamName">
 
                         <img slot="icon" :src="card.gameIcon" class="game-icon">
-                        <h4 slot="team" style="font-weight: 300;">{{ card.teamName }}</h4>
+                        <h4 slot="team" style="font-weight: 300; font-family: 'OCR';">{{ card.teamName }}</h4>
 
                         <h2 slot="header">{{ card.gameName }}</h2>
                         <p slot="content">{{ card.gameDescription }}</p>
                         <a slot="build" :href="card.gameBuild" download class="header__btn" data-clone="mint-btn" style="margin: 0 !important;">
-                            <span class="header__btn-wrapper">
-                                <span class="header__btn-text">Download Build</span>
-                            </span>
-                        </a>
-                    </card>
-
-
-                    <card data-image="../assets/images/BozoBrawl.png">
-                        <h2 slot="header">Diabolical Studios</h2>
-                        <p slot="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <a slot="build" href="#" class="header__btn" data-clone="mint-btn" style="margin: 0 !important;">
                             <span class="header__btn-wrapper">
                                 <span class="header__btn-text">Download Build</span>
                             </span>
