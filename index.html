@@ -54,7 +54,7 @@
                     icon.setAttribute('slot', 'icon');
                     icon.textContent = card.gameIcon;
 
-                    const team = document.createElement('p');
+                    const team = document.createElement('h4');
                     team.setAttribute('slot', 'team');
                     team.textContent = card.teamName;
 
@@ -144,9 +144,9 @@
 
                 <div id="app" class="card-container" style="z-index: 5;">
                     <card v-for="card in cards" :data-image="card.gameBanner" :key="card.teamName">
-                        
-                        <h4 slot="team">{{ card.teamName }}</h4>
+
                         <img slot="icon" :src="card.gameIcon" class="game-icon">
+                        <h4 slot="team">{{ card.teamName }}</h4>
 
                         <h2 slot="header">{{ card.gameName }}</h2>
                         <p slot="content">{{ card.gameDescription }}</p>
