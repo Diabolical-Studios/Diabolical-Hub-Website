@@ -22,6 +22,191 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
+    <style>
+        body {
+            background-color: #222222;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #upload-form {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            width: 50vw;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s;
+        }
+
+        @media (max-width: 1200px) {
+            #upload-form {
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+                transition: transform 0.2s;
+                width: 90vw;
+                overflow: auto;
+                height: 70svh;
+            }
+        }
+
+        #upload-form:hover {
+            transform: translateY(-3px);
+        }
+
+        #upload-form label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #ffffff;
+            display: block;
+        }
+
+        #upload-form input[type="text"],
+        #upload-form input[type="url"],
+        #upload-form textarea,
+        #upload-form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #E3B40C;
+            font-size: 16px;
+        }
+
+        #upload-form input[type="submit"] {
+            background-color: #008CBA;
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        #upload-form input[type="submit"]:hover {
+            background-color: #005f5f;
+        }
+
+        #upload-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #E3B40C;
+            font-size: 16px;
+        }
+
+        #upload-form option {
+            background-color: #333;
+            color: #E3B40C;
+        }
+
+        .hero__title {
+            transition: color 0.2s;
+        }
+
+        .hero__title:hover {
+            color: #E3B40C;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        /* Add your toast styles here */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999999;
+        }
+
+        .toast-notification {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+            transform: translateY(-100px);
+            display: none;
+            width: 250px;
+        }
+
+        .toast-show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="no-scrollz">
+
+    <section class="intro">
+
+        <div class="intro__background slide" id="slide1">
+
+            <div style="
+            width: 100%;
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+            z-index: 3;
+            mix-blend-mode: darken;
+            "></div>
+
+            <div class="hero__content">
+                <div class="hero__title-wrapper" style="display: flex; gap: 20px;">
+
+                    <h1 class="hero__title" title="upload" style="color: #E3B40C;">upload</h1>
+                    <h2 class="hero__title">game</h2>
+
+                </div>
+
+                <form id="upload-form">
+                    <label for="team-name">Team Name:</label>
+                    <select id="teamName" name="teamName" required></select>
+
+                    <label for="game-icon">Game Icon URL:</label>
+                    <input type="url" id="gameIcon" name="gameIcon" required><br><br>
+
+                    <label for="game-banner">Game Banner URL:</label>
+                    <input type="url" id="gameBanner" name="gameBanner" required><br><br>
+
+                    <label for="game-name">Game Name:</label>
+                    <input type="text" id="gameName" name="gameName" required><br><br>
+
+                    <label for="game-description">Game Description:</label>
+                    <textarea id="gameDescription" name="gameDescription" required></textarea><br><br>
+
+                    <label for="build-file">Upload Build URL:</label>
+                    <input type="url" id="gameBuild" name="gameBuild" required><br><br>
+
+                    <a href="#" class="header__btn" onclick="submitForm(event)" style="margin: 0 !important;">
+                        <span class="header__btn-wrapper">
+                            <span class="header__btn-text">Submit</span>
+                        </span>
+                    </a>
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <div id="toast-container" class="toast-container">
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             // Grab the form element by its ID
@@ -118,164 +303,6 @@
         }
     </script>
 
-    <style>
-        body {
-            background-color: #222222;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        #upload-form {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            width: 50vw;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            transition: transform 0.2s;
-        }
-
-        @media (max-width: 1200px) {
-            #upload-form {
-                background-color: rgba(255, 255, 255, 0.1);
-                border-radius: 8px;
-                padding: 20px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-                transition: transform 0.2s;
-                width: 90vw;
-                overflow: auto;
-                height: 70svh;
-            }
-        }
-
-        #upload-form:hover {
-            transform: translateY(-3px);
-        }
-
-        #upload-form label {
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #ffffff;
-            display: block;
-        }
-
-        #upload-form input[type="text"],
-        #upload-form input[type="url"],
-        #upload-form textarea,
-        #upload-form input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #E3B40C;
-            font-size: 16px;
-        }
-
-        #upload-form input[type="submit"] {
-            background-color: #008CBA;
-            color: rgb(255, 255, 255);
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.2s;
-        }
-
-        #upload-form input[type="submit"]:hover {
-            background-color: #005f5f;
-        }
-
-        #upload-form select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #E3B40C;
-            font-size: 16px;
-        }
-
-        #upload-form option {
-            background-color: #333;
-            color: #E3B40C;
-        }
-
-        .hero__title {
-            transition: color 0.2s;
-        }
-
-        .hero__title:hover {
-            color: #E3B40C;
-        }
-
-        textarea {
-            resize: vertical;
-        }
-    </style>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-</head>
-
-<body class="no-scrollz">
-
-    <section class="intro">
-
-        <div class="intro__background slide" id="slide1">
-
-            <div style="
-            width: 100%;
-            position: absolute;
-            height: 100%;
-            background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-            z-index: 3;
-            mix-blend-mode: darken;
-            "></div>
-
-            <div class="hero__content">
-                <div class="hero__title-wrapper" style="display: flex; gap: 20px;">
-
-                    <h1 class="hero__title" title="upload" style="color: #E3B40C;">upload</h1>
-                    <h2 class="hero__title">game</h2>
-
-                </div>
-
-                <form id="upload-form">
-                    <label for="team-name">Team Name:</label>
-                    <select id="teamName" name="teamName" required></select>
-
-                    <label for="game-icon">Game Icon URL:</label>
-                    <input type="url" id="gameIcon" name="gameIcon" required><br><br>
-
-                    <label for="game-banner">Game Banner URL:</label>
-                    <input type="url" id="gameBanner" name="gameBanner" required><br><br>
-
-                    <label for="game-name">Game Name:</label>
-                    <input type="text" id="gameName" name="gameName" required><br><br>
-
-                    <label for="game-description">Game Description:</label>
-                    <textarea id="gameDescription" name="gameDescription" required></textarea><br><br>
-
-                    <label for="build-file">Upload Build URL:</label>
-                    <input type="url" id="gameBuild" name="gameBuild" required><br><br>
-
-                    <a href="#" class="header__btn" onclick="submitForm(event)" style="margin: 0 !important;">
-                        <span class="header__btn-wrapper">
-                            <span class="header__btn-text">Submit</span>
-                        </span>
-                    </a>
-
-                </form>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
     <script>
 
         function submitForm(event) {
@@ -286,7 +313,62 @@
             }
         }
 
+        // Toast function
+        function createToast(message, isSuccess = true) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast-notification ${isSuccess ? 'toast-success' : 'toast-error'}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('toast-show');
+            }, 100);
+            setTimeout(() => {
+                toast.classList.remove('toast-show');
+                setTimeout(() => {
+                    container.removeChild(toast);
+                }, 500);
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const form = document.getElementById('upload-form');
+            if (form) {
+                form.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    const formData = new FormData(event.target);
+                    const jsonData = {
+                        teamName: formData.get('teamName'),
+                        // Other fields here
+                    };
+
+                    try {
+                        const response = await fetch('/.netlify/functions/upload', {
+                            method: 'POST',
+                            body: JSON.stringify(jsonData),
+                            headers: { 'Content-Type': 'application/json' },
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            throw new Error(errorData.error || `Server returned status: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        createToast('Data uploaded successfully!', true);
+                        window.location.href = '/';
+                    } catch (error) {
+                        console.error('Error uploading data:', error);
+                        createToast(`Failed to upload data: ${error.message}`, false);
+                    }
+                });
+            }
+        });
+
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 </body>
 

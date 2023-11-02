@@ -61,7 +61,7 @@ exports.handler = async function (event, context) {
 
     let redirectUrl;
     if (userTeam) {
-      redirectUrl = `https://diabolical.services/upload.html?team=${userTeam}&username=${username}`;
+      redirectUrl = `https://diabolical.services/upload?team=${userTeam}&username=${username}`;
     } else {
       redirectUrl = 'https://diabolical.services';
     }
