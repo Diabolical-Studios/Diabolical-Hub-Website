@@ -35,7 +35,7 @@ exports.handler = async (event, context) => {
     if (data.teamName !== teamNameInSession) {
         return {
             statusCode: 403,
-            body: JSON.stringify({ error: 'The provided team name does not match the authorized team name for the session.' }),
+            body: JSON.stringify({ error: 'User is not authorized to upload for this team.' }),
         };
     }
 

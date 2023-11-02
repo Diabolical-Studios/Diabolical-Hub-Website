@@ -69,6 +69,10 @@
                         // Handle the server response (e.g., update the UI or navigate to another page)
                         console.log(data);
                         alert('Data uploaded successfully!');
+
+                        // Redirect to homepage or another URL
+                        window.location.href = '/'; // This sets the URL to the root of your domain
+
                     } catch (error) {
                         // Handle any errors that occurred during the fetch
                         console.error('Error uploading data:', error);
@@ -272,11 +276,12 @@
     </section>
 
     <script>
+        
         function submitForm(event) {
             event.preventDefault();
             const form = document.getElementById('upload-form');
             if (form) {
-                form.dispatchEvent(new Event('submit'));
+                form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
             }
         }
 
