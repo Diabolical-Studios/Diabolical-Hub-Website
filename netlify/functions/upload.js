@@ -27,19 +27,17 @@ exports.handler = async (event, context) => {
 
     const username = session.username;
     console.log('Fetched GitHub Username:', username);
-
-    const teamNameInSession = session.teamName;
-    console.log('Fetched GitHub Team from session:', teamNameInSession);
-
-    // Ensure that the teamName from the incoming data matches the teamName in the session
-    if (data.teamName !== teamNameInSession) {
+    
+    // Fetch the list of teams the user is authorized to upload for
+    const authorizedTeams = await getTeamsForUsername(username);
+    
+    // Check if the teamName from the request is in the list of authorized teams for the user
+    if (!authorizedTeams.includes(data.teamName)) {
         return {
             statusCode: 403,
             body: JSON.stringify({ error: 'User is not authorized to upload for this team.' }),
         };
     }
-
-    const authorizedTeams = await getTeamsForUsername(username);
 
     // Check if the teamName from the request is in the list of authorized teams for the user
     if (!authorizedTeams.includes(data.teamName)) {
