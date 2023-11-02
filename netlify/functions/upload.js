@@ -39,9 +39,10 @@ exports.handler = async (event, context) => {
         };
     }
 
-    const authorizedTeamName = await getTeamForUsername(username);
+    const authorizedTeams = await getTeamsForUsername(username);
 
-    if (!authorizedTeamName || authorizedTeamName !== teamNameInSession) {
+    // Check if the teamName from the request is in the list of authorized teams for the user
+    if (!authorizedTeams.includes(data.teamName)) {
         return {
             statusCode: 403,
             body: JSON.stringify({ error: 'User is not authorized to upload for this team.' }),
@@ -80,24 +81,27 @@ exports.handler = async (event, context) => {
     }
 };
 
-async function getTeamForUsername(username) {
+async function getTeamsForUsername(username) {
     try {
         const response = await axios.get('https://diabolical.services/authorized_users.json');
         const teamAssignments = response.data;
 
         console.log('Team Assignments:', teamAssignments);
 
+        // This will hold all the teams the user belongs to
+        let userTeams = [];
+
+        // Iterate through the teams and add to userTeams if the user is in the team
         for (const [team, users] of Object.entries(teamAssignments)) {
             if (users.includes(username)) {
-                return team;
+                userTeams.push(team);
             }
         }
+
+        return userTeams; // Return the list of teams
+
     } catch (error) {
-        console.error('Error in handler:', error);
-        return {
-            statusCode: error.statusCode || 500,
-            body: JSON.stringify({ error: error.message }),
-        };
+        console.error('Error in getTeamsForUsername:', error);
+        throw error; // Rethrow the error to be handled by the caller
     }
-    return null;
 }
