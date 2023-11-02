@@ -189,7 +189,7 @@
                     <label for="build-file">Upload Build URL:</label>
                     <input type="url" id="gameBuild" name="gameBuild" required><br><br>
 
-                    <a href="#" class="header__btn" onclick="submitForm(event)" style="margin: 0 !important;">
+                    <a class="header__btn" onclick="submitForm(event)" style="margin: 0 !important;">
                         <span class="header__btn-wrapper">
                             <span class="header__btn-text">Submit</span>
                         </span>
@@ -237,7 +237,7 @@
 
                         const data = await response.json();
                         createToast('Data uploaded successfully!', true);
-                        window.location.href = '/'; // Optional: Redirect as needed
+                        window.location.href = '/';
                     } catch (error) {
                         console.error('Error uploading data:', error);
                         createToast(`Failed to upload data: ${error.message}`, false);
@@ -306,40 +306,6 @@
                 }, 500);
             }, 3000);
         }
-
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const form = document.getElementById('upload-form');
-            if (form) {
-                form.addEventListener('submit', async (event) => {
-                    event.preventDefault();
-                    const formData = new FormData(event.target);
-                    const jsonData = {
-                        teamName: formData.get('teamName'),
-                        // Other fields here
-                    };
-
-                    try {
-                        const response = await fetch('/.netlify/functions/upload', {
-                            method: 'POST',
-                            body: JSON.stringify(jsonData),
-                            headers: { 'Content-Type': 'application/json' },
-                        });
-
-                        if (!response.ok) {
-                            const errorData = await response.json();
-                            throw new Error(errorData.error || `Server returned status: ${response.status}`);
-                        }
-
-                        const data = await response.json();
-                        createToast('Data uploaded successfully!', true);
-                        window.location.href = '/';
-                    } catch (error) {
-                        console.error('Error uploading data:', error);
-                        createToast(`Failed to upload data: ${error.message}`, false);
-                    }
-                });
-            }
-        });
 
     </script>
 
