@@ -75,8 +75,12 @@ async function getTeamForUsername(username) {
         const response = await axios.get('https://diabolical.services/authorized_users.json');
         const teamAssignments = response.data;
 
+        console.log('Team Assignments:', teamAssignments); // Additional logging
+
         for (const [team, users] of Object.entries(teamAssignments)) {
+            console.log(`Checking team: ${team} for user: ${username}`); // Additional logging
             if (users.includes(username)) {
+                console.log(`Authorized team for user: ${username} is ${team}`); // Additional logging
                 return team;
             }
         }
@@ -84,5 +88,6 @@ async function getTeamForUsername(username) {
         console.error('Error fetching team assignments:', error);
         throw error;
     }
+    console.log(`No authorized team found for user: ${username}`); // Additional logging
     return null; // Return null if the username doesn't belong to any team
 }
