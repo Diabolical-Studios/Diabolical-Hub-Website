@@ -8,8 +8,6 @@ exports.handler = async (event, context) => {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
-    console.log('Received Event:', event);
-
     const sessionCookie = event.headers.cookie && event.headers.cookie.match(/sessionID=([^;]+);?/);
     const sessionID = sessionCookie && sessionCookie[1];
 
@@ -30,8 +28,16 @@ exports.handler = async (event, context) => {
     const username = session.username;
     console.log('Fetched GitHub Username:', username);
 
-    const teamNameInSession = session.teamName; // Directly fetch team from session
+    const teamNameInSession = session.teamName;
     console.log('Fetched GitHub Team from session:', teamNameInSession);
+
+    // Ensure that the teamName from the incoming data matches the teamName in the session
+    if (data.teamName !== teamNameInSession) {
+        return {
+            statusCode: 403,
+            body: JSON.stringify({ error: 'The provided team name does not match the authorized team name for the session.' }),
+        };
+    }
 
     const authorizedTeamName = await getTeamForUsername(username);
 
@@ -50,11 +56,13 @@ exports.handler = async (event, context) => {
         let result;
         if (existingCard) {
             result = await prisma.card.update({
-                where: { id: existingCard.id }, // Use the `id` of the existing card for the update
+                where: { id: existingCard.id },
                 data: data
             });
         } else {
-            result = await prisma.card.create({ data: data });
+            result = await prisma.card.create({
+                data: data
+            });
         }
 
         return {
@@ -63,6 +71,7 @@ exports.handler = async (event, context) => {
         };
 
     } catch (error) {
+        console.error('Error in processing:', error);
         return {
             statusCode: 500,
             body: JSON.stringify({ error: error.message }),
@@ -75,12 +84,10 @@ async function getTeamForUsername(username) {
         const response = await axios.get('https://diabolical.services/authorized_users.json');
         const teamAssignments = response.data;
 
-        console.log('Team Assignments:', teamAssignments); // Additional logging
+        console.log('Team Assignments:', teamAssignments);
 
         for (const [team, users] of Object.entries(teamAssignments)) {
-            console.log(`Checking team: ${team} for user: ${username}`); // Additional logging
             if (users.includes(username)) {
-                console.log(`Authorized team for user: ${username} is ${team}`); // Additional logging
                 return team;
             }
         }
@@ -88,6 +95,5 @@ async function getTeamForUsername(username) {
         console.error('Error fetching team assignments:', error);
         throw error;
     }
-    console.log(`No authorized team found for user: ${username}`); // Additional logging
-    return null; // Return null if the username doesn't belong to any team
+    return null;
 }
