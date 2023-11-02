@@ -209,20 +209,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            // Grab the form element by its ID
             const form = document.getElementById('upload-form');
-
-            // Check if the form is not null before attaching the event listener
             if (form) {
-                // Attach an event listener to the form's submit event
                 form.addEventListener('submit', async (event) => {
-                    // Prevent the default form submission behavior
                     event.preventDefault();
-
-                    // Create a new FormData object using the form that triggered the event
                     const formData = new FormData(event.target);
-
-                    // Extract data from the form
                     const jsonData = {
                         teamName: formData.get('teamName'),
                         gameDescription: formData.get('gameDescription'),
@@ -232,41 +223,26 @@
                         gameBuild: formData.get('gameBuild')
                     };
 
-
                     try {
-                        // Send the data to the server using the Fetch API
                         const response = await fetch('/.netlify/functions/upload', {
                             method: 'POST',
                             body: JSON.stringify(jsonData),
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
+                            headers: { 'Content-Type': 'application/json' },
                         });
 
-                        // Check if the response is ok
                         if (!response.ok) {
                             const errorData = await response.json();
                             throw new Error(errorData.error || `Server returned status: ${response.status}`);
                         }
 
-                        // Parse the JSON response from the server
                         const data = await response.json();
-
-                        // Handle the server response (e.g., update the UI or navigate to another page)
-                        console.log(data);
-                        alert('Data uploaded successfully!');
-
-                        // Redirect to homepage or another URL
-                        window.location.href = '/'; // This sets the URL to the root of your domain
-
+                        createToast('Data uploaded successfully!', true);
+                        window.location.href = '/'; // Optional: Redirect as needed
                     } catch (error) {
-                        // Handle any errors that occurred during the fetch
                         console.error('Error uploading data:', error);
-                        alert(`Failed to upload data: ${error.message}`);
+                        createToast(`Failed to upload data: ${error.message}`, false);
                     }
                 });
-            } else {
-                console.error('upload-form not found in the document.');
             }
         });
     </script>
