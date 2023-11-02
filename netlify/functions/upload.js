@@ -72,9 +72,10 @@ exports.handler = async (event, context) => {
 
     } catch (error) {
         console.error('Error in processing:', error);
+        // Include more descriptive error messages depending on the error type
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: error.message }),
+            body: JSON.stringify({ error: `Internal Server Error: ${error.message}` }),
         };
     }
 };
@@ -92,8 +93,11 @@ async function getTeamForUsername(username) {
             }
         }
     } catch (error) {
-        console.error('Error fetching team assignments:', error);
-        throw error;
+        console.error('Error in handler:', error);
+        return {
+            statusCode: error.statusCode || 500,
+            body: JSON.stringify({ error: error.message }),
+        };
     }
     return null;
 }
