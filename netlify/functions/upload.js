@@ -27,20 +27,21 @@ exports.handler = async (event, context) => {
 
     const username = session.username;
     console.log('Fetched GitHub Username:', username);
-    
-    // Fetch the list of teams the user is authorized to upload for
-    const authorizedTeams = await getTeamsForUsername(username);
-    
-    // Check if the teamName from the request is in the list of authorized teams for the user
-    if (!authorizedTeams.includes(data.teamName)) {
+
+    const teamNameInSession = session.teamName;
+    console.log('Fetched GitHub Team from session:', teamNameInSession);
+
+    // Ensure that the teamName from the incoming data matches the teamName in the session
+    if (data.teamName !== teamNameInSession) {
         return {
             statusCode: 403,
             body: JSON.stringify({ error: 'User is not authorized to upload for this team.' }),
         };
     }
 
-    // Check if the teamName from the request is in the list of authorized teams for the user
-    if (!authorizedTeams.includes(data.teamName)) {
+    const authorizedTeamName = await getTeamForUsername(username);
+
+    if (!authorizedTeamName || authorizedTeamName !== teamNameInSession) {
         return {
             statusCode: 403,
             body: JSON.stringify({ error: 'User is not authorized to upload for this team.' }),
@@ -79,27 +80,24 @@ exports.handler = async (event, context) => {
     }
 };
 
-async function getTeamsForUsername(username) {
+async function getTeamForUsername(username) {
     try {
         const response = await axios.get('https://diabolical.services/authorized_users.json');
         const teamAssignments = response.data;
 
         console.log('Team Assignments:', teamAssignments);
 
-        // This will hold all the teams the user belongs to
-        let userTeams = [];
-
-        // Iterate through the teams and add to userTeams if the user is in the team
         for (const [team, users] of Object.entries(teamAssignments)) {
             if (users.includes(username)) {
-                userTeams.push(team);
+                return team;
             }
         }
-
-        return userTeams; // Return the list of teams
-
     } catch (error) {
-        console.error('Error in getTeamsForUsername:', error);
-        throw error; // Rethrow the error to be handled by the caller
+        console.error('Error in handler:', error);
+        return {
+            statusCode: error.statusCode || 500,
+            body: JSON.stringify({ error: error.message }),
+        };
     }
+    return null;
 }
