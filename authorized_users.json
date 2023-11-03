@@ -1,9 +1,9 @@
 {
-    "Diabolical Studios": ["blazittx", "Berthustra", "Emremefa1", "galalksi", "Skarnir"],
-    "CD Projekt Red": ["Berthustra", "blazittx"],
-    "Insomniac Games": ["Berthustra", "blazittx"],
-    "Remedy": ["Berthustra", "blazittx"],
-    "From Software": ["Berthustra", "blazittx"],
-    "Bethesda": ["Berthustra", "blazittx"]
+    "Diabolical Studios": ["blazittx", "", "Emremefa1", "galalksi", "Skarnir"],
+    "CD Projekt Red": ["Berthustra", ""],
+    "Insomniac Games": ["", ""],
+    "Remedy": ["", ""],
+    "From Software": ["", ""],
+    "Bethesda": ["", ""]
   }
   
