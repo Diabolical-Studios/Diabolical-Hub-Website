@@ -50,6 +50,10 @@ $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   &:hover {
     .card-info {
       transform: translateY(0);
+      transition:
+        0.6s $hoverEasing,
+        height 0.6s $hoverEasing;
+      height: 100%;
     }
 
     .card-info p {
@@ -73,8 +77,8 @@ $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 
     .card-bg {
       transition:
-        0.6s $hoverEasing,
-        opacity 5s $hoverEasing;
+        0.4s $hoverEasing,
+        opacity 0.4s $hoverEasing;
       opacity: 0.8;
     }
 
@@ -136,7 +140,7 @@ $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   flex-direction: column;
   gap: 12px;
   padding: 20px;
-  min-height: 200px;
+  height: 50%;
   position: absolute;
   width: -webkit-fill-available;
   bottom: 0;
