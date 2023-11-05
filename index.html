@@ -42,7 +42,8 @@
 
                 <a href="#" class="header__btn" onclick="startGitHubAuth()" id="loginButton" data-clone="mint-btn">
                     <span class="header__btn-wrapper">
-                        <span class="header__btn-text">Login with</span>
+
+                        <span class="header__btn-text" id="authButton">Login with</span>
 
                         <svg id="githubIcon" width="28px" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg"
                             style="margin-left: 8px; vertical-align: middle;">
@@ -112,7 +113,7 @@
         // When the window loads, check login status and update button
         window.onload = function () {
             checkLoginAndUpdateButton();
-            changeloginButtonIfLoggedIn();
+            changeAuthButtonIfLoggedIn();
             loadCards(); // If you want to load cards on window load too
         };
 
@@ -185,16 +186,16 @@
             return cookie[name];
         }
 
-        function changeloginButtonIfLoggedIn() {
+        function changeAuthButtonIfLoggedIn() {
             const sessionCookie = getCookie('sessionID');
-            const loginButton = document.getElementById('loginButton');
+            const authButton = document.getElementById('authButton');
 
             if (sessionCookie) {
-                loginButton.textContent = 'Upload';
-                // loginButton.onclick = function () { window.location.href = '/upload'; };
+                authButton.textContent = 'Upload';
+                // authButton.onclick = function () { window.location.href = '/upload'; };
             } else {
-                loginButton.textContent = 'Login with GitHub';
-                loginButton.onclick = startGitHubAuth;
+                authButton.textContent = 'Login with GitHub';
+                authButton.onclick = startGitHubAuth;
             }
         }
     </script>
