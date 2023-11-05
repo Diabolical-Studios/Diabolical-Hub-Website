@@ -43,7 +43,7 @@
                 <a href="#" class="header__btn" onclick="startGitHubAuth()" id="loginButton" data-clone="mint-btn">
                     <span class="header__btn-wrapper">
 
-                        <span class="header__btn-text" id="authButton">Login with</span>
+                        <span class="header__btn-text">Login with</span>
 
                         <svg id="githubIcon" width="28px" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg"
                             style="margin-left: 8px; vertical-align: middle;">
@@ -108,23 +108,28 @@
         </div>
 
     </section>
-    
+
     <script>
         // When the window loads, check login status and update button
         window.onload = function () {
             checkLoginAndUpdateButton();
-            changeAuthButtonIfLoggedIn();
             loadCards(); // If you want to load cards on window load too
         };
 
         function checkLoginAndUpdateButton() {
-            if (document.cookie.split(';').some((item) => item.trim().startsWith('sessionID='))) {
-                const loginButton = document.getElementById('loginButton');
-                const buttonText = loginButton.querySelector('.header__btn-text');
-                const githubIcon = document.getElementById('githubIcon');
+            const sessionCookie = getCookie('sessionID');
+            const loginButton = document.getElementById('loginButton');
+            const buttonText = loginButton.querySelector('.header__btn-text');
+            const githubIcon = document.getElementById('githubIcon');
 
+            if (sessionCookie) {
                 buttonText.textContent = 'Upload';
                 githubIcon.style.display = 'none';
+                loginButton.onclick = function () { window.location.href = '/upload'; };
+            } else {
+                buttonText.textContent = 'Login with';
+                githubIcon.style.display = 'block';
+                loginButton.onclick = startGitHubAuth;
             }
         }
 
@@ -186,18 +191,6 @@
             return cookie[name];
         }
 
-        function changeAuthButtonIfLoggedIn() {
-            const sessionCookie = getCookie('sessionID');
-            const authButton = document.getElementById('authButton');
-
-            if (sessionCookie) {
-                authButton.textContent = 'Upload';
-                // authButton.onclick = function () { window.location.href = '/upload'; };
-            } else {
-                authButton.textContent = 'Login with GitHub';
-                authButton.onclick = startGitHubAuth;
-            }
-        }
     </script>
 
 

@@ -58,12 +58,11 @@ exports.handler = async function (event, context) {
       }
     });
 
+    let redirectUrl = 'https://diabolical.services/';  // Redirect to a generic welcome page
 
-    let redirectUrl;
+    // You can still pass the team as a query parameter if it might be used on the welcome page
     if (userTeam) {
-      redirectUrl = `https://diabolical.services/upload?team=${userTeam}&username=${username}`;
-    } else {
-      redirectUrl = 'https://diabolical.services';
+      redirectUrl += `?team=${userTeam}&username=${username}`;
     }
 
     return {
