@@ -114,7 +114,7 @@
 }
 .card-info a {
   opacity: 0;
-  transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 .card-info * {
   position: relative;
