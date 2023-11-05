@@ -112,7 +112,7 @@
         // When the window loads, check login status and update button
         window.onload = function () {
             checkLoginAndUpdateButton();
-            changeAuthButtonIfLoggedIn();
+            changeloginButtonIfLoggedIn();
             loadCards(); // If you want to load cards on window load too
         };
 
@@ -185,16 +185,16 @@
             return cookie[name];
         }
 
-        function changeAuthButtonIfLoggedIn() {
+        function changeloginButtonIfLoggedIn() {
             const sessionCookie = getCookie('sessionID');
-            const authButton = document.getElementById('authButton');
+            const loginButton = document.getElementById('loginButton');
 
             if (sessionCookie) {
-                authButton.textContent = 'Upload';
-                // authButton.onclick = function () { window.location.href = '/upload'; };
+                loginButton.textContent = 'Upload';
+                // loginButton.onclick = function () { window.location.href = '/upload'; };
             } else {
-                authButton.textContent = 'Login with GitHub';
-                authButton.onclick = startGitHubAuth;
+                loginButton.textContent = 'Login with GitHub';
+                loginButton.onclick = startGitHubAuth;
             }
         }
     </script>
