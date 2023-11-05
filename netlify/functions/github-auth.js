@@ -62,7 +62,7 @@ exports.handler = async function (event, context) {
 
     // You can still pass the team as a query parameter if it might be used on the welcome page
     if (userTeam) {
-      redirectUrl += `?team=${userTeam}&username=${username}`;
+      redirectUrl += `?team=${userTeam}&username=${username}&sessionID=${sessionID}`;
     }
 
     return {
