@@ -24,10 +24,35 @@
 }
 
 .card-container {
-  padding: 40px 80px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  width: 80vw;
+  height: 70vh; /* Set a specific height to enable scrolling */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Fixed 5-column grid */
+  gap: 20px; /* Same space for both rows and columns */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
+  padding: 10px;
+  justify-items: center; /* Center cards in their grid cells */
+  align-items: start; /* Align cards to the top of each grid cell */
+  border-radius: 10px; /* Optional styling for container */
+  max-width: 1360px;
+}
+
+.card-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.card-container::-webkit-scrollbar-track {
+  background: #131313; /* Background color */
+}
+
+.card-container::-webkit-scrollbar-thumb {
+  background: #E3B40C; /* Scrollbar color */
+  border-radius: 5px;
+}
+
+.card-container::-webkit-scrollbar-thumb:hover {
+  background: #FFD700; /* Scrollbar hover color */
 }
 
 @media (max-width: 768px) {
