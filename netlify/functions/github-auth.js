@@ -1,8 +1,5 @@
 const axios = require('axios');
-const { PrismaClient } = require('@prisma/client');
 const { v4: uuidv4 } = require('uuid'); // Import UUID library to generate unique session IDs
-
-const prisma = new PrismaClient();
 
 exports.handler = async function (event, context) {
   const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
@@ -84,17 +81,6 @@ exports.handler = async function (event, context) {
     const expiryTime = new Date();
     expiryTime.setHours(expiryTime.getHours() + 24);
     console.log('Session Expiry Time:', expiryTime);
-
-    console.log('Storing session in database...');
-    await prisma.session.create({
-      data: {
-        sessionId: sessionID,
-        username: username,
-        teamName: userTeam,
-        expiryTime: expiryTime,
-      },
-    });
-    console.log('Session stored successfully');
 
     const redirectUrl = userTeam
       ? `https://hub.diabolical.studio/upload?team=${userTeam}&username=${username}`
