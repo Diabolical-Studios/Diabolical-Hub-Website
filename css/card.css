@@ -30,7 +30,6 @@
   grid-template-columns: repeat(5, 1fr); /* Fixed 5-column grid */
   overflow-y: auto; /* Enable vertical scrolling */
   overflow-x: hidden; /* Disable horizontal scrolling */
-  padding: 10px;
   justify-items: center; /* Center cards in their grid cells */
   align-items: start; /* Align cards to the top of each grid cell */
   border-radius: 10px; /* Optional styling for container */
