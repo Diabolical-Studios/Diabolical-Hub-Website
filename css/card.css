@@ -28,7 +28,6 @@
   height: 70vh; /* Set a specific height to enable scrolling */
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* Fixed 5-column grid */
-  gap: 20px; /* Same space for both rows and columns */
   overflow-y: auto; /* Enable vertical scrolling */
   overflow-x: hidden; /* Disable horizontal scrolling */
   padding: 10px;
@@ -43,16 +42,16 @@
 }
 
 .card-container::-webkit-scrollbar-track {
-  background: #131313; /* Background color */
+  background: #00000000; /* Background color */
 }
 
 .card-container::-webkit-scrollbar-thumb {
-  background: #E3B40C; /* Scrollbar color */
-  border-radius: 5px;
+  background: #ffffff9e; /* Scrollbar color */
+  border-radius: 4px;
 }
 
 .card-container::-webkit-scrollbar-thumb:hover {
-  background: #FFD700; /* Scrollbar hover color */
+  background: #ffffff; /* Scrollbar hover color */
 }
 
 @media (max-width: 768px) {
