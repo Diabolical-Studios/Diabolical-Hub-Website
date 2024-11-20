@@ -1,7 +1,7 @@
 .card-title {
   font-family: "Raleway";
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 400;
   color: #5D4037;
   text-align: center;
 }
@@ -162,9 +162,9 @@
 }
 
 .card-info h2 {
-  font-family: "OCR";
+  font-family: "Consolas";
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.2;
   text-shadow: rgba(0, 0, 0, 0.5) 0 10px 10px;
   text-align: center;

@@ -1,74 +1,40 @@
 :root {
-  --dark-blue: #987a0e;
-  --light-blue: #E3B40C;
+  --dark-blue: #ffffff;
+  --light-blue: #000;
 }
 
-/* Animations */
-@-webkit-keyframes bg-scrolling-reverse {
-  100% {
-    background-position: 50px 50px;
-  }
+body {
+  /*Box model stuff*/
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-color: #000;
+  background-image: radial-gradient(rgba(87, 87, 87, 0.3) 1px, transparent 1px),
+    radial-gradient(rgba(87, 87, 87, 0.3) 1px, transparent 1px);
+  background-position: 0 0, 0 0;
+  background-size: 20px 20px;
+  /*Typography stuff*/
+  font-family: "Consolas", sans-serif;
+  color: white;
+  /*Manipulations stuff*/
+  animation: moveBackground 3s linear infinite;
+  /*Miscellaneous*/
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-@-moz-keyframes bg-scrolling-reverse {
-  100% {
-    background-position: 50px 50px;
-  }
-}
-
-@-o-keyframes bg-scrolling-reverse {
-  100% {
-    background-position: 50px 50px;
-  }
-}
-
-@keyframes bg-scrolling-reverse {
-  100% {
-    background-position: 50px 50px;
-  }
-}
-
-@-webkit-keyframes bg-scrolling {
+@keyframes moveBackground {
   0% {
-    background-position: 50px 50px;
+    background-position: 0 0, 0 0;
+  }
+
+  100% {
+    background-position: 20px 20px, 20px 20px;
   }
 }
-
-@-moz-keyframes bg-scrolling {
-  0% {
-    background-position: 50px 50px;
-  }
-}
-
-@-o-keyframes bg-scrolling {
-  0% {
-    background-position: 50px 50px;
-  }
-}
-
-@keyframes bg-scrolling {
-  0% {
-    background-position: 50px 50px;
-  }
-}
-
-@keyframes glitch {
-
-  2%,
-  64% {
-    transform: translate(2px, 0) skew(0deg);
-  }
-
-  4%,
-  60% {
-    transform: translate(-2px, 0) skew(0deg);
-  }
-
-  62% {
-    transform: translate(0, 0) skew(5deg);
-  }
-}
-
 
 .hero__title-wrapper h1::after,
 h1::before {
@@ -167,41 +133,6 @@ input {
   font-family: inherit;
 }
 
-@font-face {
-  font-family: "Poppins";
-  font-weight: 400;
-  font-style: normal;
-  src: url(../assets/fonts/OCR.otf) format("opentype");
-}
-
-@font-face {
-  font-family: "Sakurata";
-  font-weight: 400;
-  font-style: normal;
-  src: url(../assets/fonts/SAKURATA.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "OCR";
-  font-weight: 400;
-  font-style: normal;
-  src: url(../assets/fonts/OCR.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "Inversionz";
-  font-weight: 400;
-  font-style: normal;
-  src: url(../assets/fonts/Inversionz.otf) format("opentype");
-}
-
-@font-face {
-  font-family: "InversionzUnboxed";
-  font-weight: 400;
-  font-style: normal;
-  src: url(../assets/fonts/InversionzUnboxed.otf) format("opentype");
-}
-
 *,
 *::after,
 *::before {
@@ -212,28 +143,6 @@ input {
 
 html {
   scroll-behavior: smooth;
-}
-
-body {
-  overflow: hidden;
-  max-width: 100%;
-  width: 100vw;
-  height: 100svh;
-  background: url("../assets/images/indir.png") repeat 0 0;
-  font-family: 'Poppins';
-
-  -webkit-animation: bg-scrolling-reverse 0.92s infinite;
-  /* Safari 4+ */
-  -moz-animation: bg-scrolling-reverse 0.92s infinite;
-  /* Fx 5+ */
-  -o-animation: bg-scrolling-reverse 0.92s infinite;
-  /* Opera 12+ */
-  animation: bg-scrolling-reverse 0.92s infinite;
-  /* IE 10+ */
-  -webkit-animation-timing-function: linear;
-  -moz-animation-timing-function: linear;
-  -o-animation-timing-function: linear;
-  animation-timing-function: linear;
 }
 
 section::-webkit-scrollbar,
@@ -306,7 +215,7 @@ body::-webkit-scrollbar-thumb:hover,
 .btn__text {
   position: relative;
   z-index: 4;
-  font-family: "OCR", sans-serif;
+  font-family: "Consolas", sans-serif;
   font-weight: 100;
   font-size: 32px;
 
@@ -402,9 +311,9 @@ body::-webkit-scrollbar-thumb:hover,
 .intro_coordinates {
   position: absolute;
   /* This allows the h3 to be positioned in relation to the parent div */
-  bottom: 0;
+  bottom: 30px;
   /* Positions the h3 at the bottom of the div */
-  left: 0;
+  left: 20px;
   /* Positions the h3 at the left of the div */
   transform-origin: bottom left;
   /* This is the pivot point for the rotation */
@@ -418,8 +327,7 @@ body::-webkit-scrollbar-thumb:hover,
 }
 
 .intro_coordinates h3 {
-  padding: 40px;
-  font-family: 'OCR';
+  font-family: 'Consolas';
   letter-spacing: 12px;
 }
 
@@ -471,7 +379,7 @@ body::-webkit-scrollbar-thumb:hover,
   white-space: nowrap;
   position: relative;
   z-index: 2;
-  font-family: "OCR";
+  font-family: "Consolas";
   font-weight: 400;
   font-size: clamp(4rem, 6vw, 16rem);
   color: #fff;
@@ -502,7 +410,7 @@ body::-webkit-scrollbar-thumb:hover,
 }
 
 .header__logo img {
-  max-width: 300px;
+  max-width: 60px;
 }
 
 @media (max-width: 768px) {
@@ -524,10 +432,10 @@ body::-webkit-scrollbar-thumb:hover,
 }
 
 .header__link {
-  font-family: "Poppins", sans-serif;
+  font-family: "Consolas", sans-serif;
   font-weight: 600;
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgb(255, 255, 255);
   transition: color 0.2s ease;
 }
 
@@ -542,7 +450,7 @@ body::-webkit-scrollbar-thumb:hover,
 }
 
 .header__link:hover {
-  color: #fff;
+  color: #2828ff;
 }
 
 @media (max-width: 991px) {
@@ -608,10 +516,10 @@ body::-webkit-scrollbar-thumb:hover,
 .header__btn-text {
   position: relative;
   z-index: 2;
-  font-family: "Poppins", sans-serif;
+  font-family: "Consolas", sans-serif;
   font-weight: 800;
-  font-size: 16px;
-  color: #222222;
+  font-size: 18px;
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
