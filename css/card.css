@@ -39,6 +39,7 @@
 
 .card-container::-webkit-scrollbar {
   width: 10px;
+  display: none;
 }
 
 .card-container::-webkit-scrollbar-track {
