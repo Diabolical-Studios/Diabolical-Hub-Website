@@ -76,29 +76,38 @@ Vue.component("card", {
 });
 
 const app = new Vue({
-  el: "#app",
-  data: {
-    cards: [],
-  },
-  async mounted() {
-    try {
-      const response = await fetch("/.netlify/functions/fetchCards", {
-        cache: "no-store",
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+    el: "#app",
+    data: {
+      cards: [],
+    },
+    async mounted() {
+      try {
+        const response = await fetch("/.netlify/functions/fetchCards", {
+          cache: "no-store",
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+  
+        // Map the API data directly to the card structure
+        if (Array.isArray(data)) {
+          this.cards = data.map(card => ({
+            gameBanner: card.background_image_url,
+            gameIcon: card.background_image_url, // Adjust if you have a specific icon URL
+            teamName: card.game_name,
+            gameName: card.game_name,
+            gameDescription: card.description,
+            gameBuild: '#', // Placeholder; update if a build URL exists
+          }));
+        } else {
+          console.error("Unexpected data format:", data);
+        }
+      } catch (error) {
+        console.error("Error fetching cards:", error);
       }
-
-      const data = await response.json();
-
-      if (Array.isArray(data)) {
-        this.cards = data;
-      } else {
-        console.error("Unexpected data format:", data);
-      }
-    } catch (error) {
-      console.error("Error fetching cards:", error);
-    }
-  },
-});
+    },
+  });
+  
