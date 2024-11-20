@@ -35,7 +35,7 @@ exports.handler = async function (event, context) {
 
 
     // Load the list of authorized usernames
-    const teamAssignmentsResponse = await axios.get('https://diabolical.services/authorized_users.json');
+    const teamAssignmentsResponse = await axios.get('https://hub.diabolical.studio/authorized_users.json');
     const teamAssignments = teamAssignmentsResponse.data;
 
     let userTeam = null;
@@ -61,9 +61,9 @@ exports.handler = async function (event, context) {
 
     let redirectUrl;
     if (userTeam) {
-      redirectUrl = `https://diabolical.services/upload?team=${userTeam}&username=${username}`;
+      redirectUrl = `https://hub.diabolical.studio/upload?team=${userTeam}&username=${username}`;
     } else {
-      redirectUrl = 'https://diabolical.services';
+      redirectUrl = 'https://hub.diabolical.studio';
     }
 
     return {
