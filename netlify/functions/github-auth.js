@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { PrismaClient } = require('@prisma/client');
-const { v4: uuidv4 } = require('uuid');  // <-- Import UUID library to generate unique session IDs
+const { v4: uuidv4 } = require('uuid'); // Import UUID library to generate unique session IDs
 
 const prisma = new PrismaClient();
 
@@ -9,74 +9,108 @@ exports.handler = async function (event, context) {
   const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
   const code = event.queryStringParameters.code;
 
+  console.log('Starting GitHub OAuth process...');
+  console.log('CLIENT_ID:', CLIENT_ID ? 'Provided' : 'Not provided');
+  console.log('CLIENT_SECRET:', CLIENT_SECRET ? 'Provided' : 'Not provided');
+  console.log('Code:', code);
+
+  if (!code) {
+    console.error('Error: Missing "code" parameter in the request');
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: 'Missing "code" parameter in the request' }),
+    };
+  }
+
+  if (!CLIENT_ID || !CLIENT_SECRET) {
+    console.error('Error: Missing GitHub client credentials');
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Missing GitHub client credentials' }),
+    };
+  }
+
   try {
-    const tokenResponse = await axios.post('https://github.com/login/oauth/access_token', {
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-      code: code,
-    }, {
-      headers: {
-        accept: 'application/json'
+    console.log('Fetching GitHub access token...');
+    const tokenResponse = await axios.post(
+      'https://github.com/login/oauth/access_token',
+      {
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        code: code,
+      },
+      {
+        headers: {
+          accept: 'application/json',
+        },
       }
-    });
+    );
 
     const accessToken = tokenResponse.data.access_token;
-    console.log('Access Token: ', accessToken);  // Log the access token to see if it's retrieved correctly
+    if (!accessToken) {
+      throw new Error('Access token not received from GitHub');
+    }
+    console.log('Access Token Retrieved:', accessToken);
 
-    // Fetch the user's GitHub username
+    console.log('Fetching GitHub user information...');
     const userResponse = await axios.get('https://api.github.com/user', {
       headers: {
-        Authorization: `token ${accessToken}`
-      }
+        Authorization: `token ${accessToken}`,
+      },
     });
 
     const username = userResponse.data.login;
-    console.log('Fetched GitHub Username:', username);  // <-- Log the GitHub username
+    console.log('GitHub Username:', username);
 
-
-    // Load the list of authorized usernames
-    const teamAssignmentsResponse = await axios.get('https://hub.diabolical.studio/authorized_users.json');
+    console.log('Fetching authorized users...');
+    const teamAssignmentsResponse = await axios.get(
+      'https://hub.diabolical.studio/authorized_users.json'
+    );
     const teamAssignments = teamAssignmentsResponse.data;
 
     let userTeam = null;
+    console.log('Authorized Users:', teamAssignments);
     for (const [team, users] of Object.entries(teamAssignments)) {
       if (users.includes(username)) {
         userTeam = team;
         break;
       }
-    } let sessionID = uuidv4();  // <-- Generate a unique session ID
-    const expiryTime = new Date();
-    expiryTime.setHours(expiryTime.getHours() + 24);  // <-- Set session expiry to 24 hours from now
+    }
+    console.log('User Team:', userTeam || 'No team found');
 
-    // Store session in the database
+    const sessionID = uuidv4();
+    console.log('Generated Session ID:', sessionID);
+
+    const expiryTime = new Date();
+    expiryTime.setHours(expiryTime.getHours() + 24);
+    console.log('Session Expiry Time:', expiryTime);
+
+    console.log('Storing session in database...');
     await prisma.session.create({
       data: {
-        sessionId: sessionID,  // Use sessionID for sessionId field
+        sessionId: sessionID,
         username: username,
         teamName: userTeam,
-        expiryTime: expiryTime  // Changed from 'expiry' to 'expiryTime' based on your model
-      }
+        expiryTime: expiryTime,
+      },
     });
+    console.log('Session stored successfully');
 
-
-    let redirectUrl;
-    if (userTeam) {
-      redirectUrl = `https://hub.diabolical.studio/upload?team=${userTeam}&username=${username}`;
-    } else {
-      redirectUrl = 'https://hub.diabolical.studio';
-    }
+    const redirectUrl = userTeam
+      ? `https://hub.diabolical.studio/upload?team=${userTeam}&username=${username}`
+      : 'https://hub.diabolical.studio';
+    console.log('Redirect URL:', redirectUrl);
 
     return {
       statusCode: 303,
       headers: {
-        'Set-Cookie': `sessionID=${sessionID}; HttpOnly; Secure; SameSite=Strict; Expires=${expiryTime.toUTCString()}`,  // <-- Set session ID in a secure, httpOnly cookie
-        Location: redirectUrl
+        'Set-Cookie': `sessionID=${sessionID}; HttpOnly; Secure; SameSite=Strict; Expires=${expiryTime.toUTCString()}`,
+        Location: redirectUrl,
       },
-      body: ''
+      body: '',
     };
-
   } catch (error) {
-    console.error('Error: ', error.response ? error.response.data : error.message);
+    console.error('Error occurred:', error.response ? error.response.data : error.message);
     return {
       statusCode: error.response ? error.response.status : 500,
       body: JSON.stringify({ error: error.response ? error.response.data : error.message }),
