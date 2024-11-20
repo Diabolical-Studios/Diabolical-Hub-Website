@@ -82,7 +82,7 @@ exports.handler = async (event, context) => {
 
 async function getTeamForUsername(username) {
     try {
-        const response = await axios.get('https://diabolical.services/authorized_users.json');
+        const response = await axios.get('https://hub.diabolical.studio/authorized_users.json');
         const teamAssignments = response.data;
 
         console.log('Team Assignments:', teamAssignments);
