@@ -24,16 +24,17 @@
 }
 
 .card-container {
-  width: 80vw;
-  height: 70vh; /* Set a specific height to enable scrolling */
+  height: 70vh;
+  width: fit-content;
+  gap: 12px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Fixed 5-column grid */
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Disable horizontal scrolling */
-  justify-items: center; /* Center cards in their grid cells */
-  align-items: start; /* Align cards to the top of each grid cell */
-  border-radius: 10px; /* Optional styling for container */
-  max-width: 1360px;
+  grid-template-columns: repeat(6, 1fr);
+  overflow-y: auto;
+  overflow-x: hidden;
+  justify-items: center;
+  align-items: start;
+  border-radius: 10px;
+  padding: 12px;
 }
 
 .card-container::-webkit-scrollbar {
@@ -60,7 +61,6 @@
   }
 }
 .card-wrap {
-  margin: 10px;
   transform: perspective(800px);
   transform-style: preserve-3d;
   cursor: pointer;
