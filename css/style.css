@@ -248,6 +248,7 @@ body::-webkit-scrollbar-thumb:hover,
   z-index: 2;
   height: 100%;
   width: 100%;
+  gap: 100px;
 }
 
 .intro__background {

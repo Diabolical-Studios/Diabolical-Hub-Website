@@ -26,15 +26,15 @@
 .card-container {
   height: -webkit-fill-available;
   width: fit-content;
-  gap: 12px;
+  gap: 24px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, auto);
   overflow-y: auto;
   overflow-x: hidden;
   justify-items: center;
   align-items: start;
   border-radius: 24px 10px 0 0;
-  padding: 12px;
+  padding: 24px;
   background: #1b1b1b;
   border: 1px solid #323232;
   border-bottom: 0;
