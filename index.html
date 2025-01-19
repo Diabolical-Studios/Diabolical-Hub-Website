@@ -41,14 +41,16 @@
       <nav class="flex space-x-4 items-center">
         <a href="#" class="text-gray-300 hover:underline">Home</a>
         <a href="#" class="text-gray-300 hover:underline">Discord</a>
-        <button class="shiny-cta">
+        <button class="shiny-cta" onclick="startGitHubAuth()" id="loginButton" data-clone="mint-btn">
           <span>Login With Github</span>
         </button>
       </nav>
     </header>
 
     <!-- Content Area -->
-    <div class="flex h-[90svh] outline-double outline-2 outline-zinc-900 bg-zinc-950">
+    <div
+      class="flex h-[90svh] outline-double outline-2 outline-zinc-900 bg-zinc-950"
+    >
       <!-- Sidebar -->
       <aside class="w-1/4 h-full p-6 border-r-2 border-zinc-900">
         <h2 class="text-lg font-bold uppercase tracking-wider">Games</h2>
@@ -56,10 +58,7 @@
 
       <!-- Games Grid -->
       <main class="w-3/4 p-6 overflow-y-auto">
-        <div
-          id="app"
-          class="grid grid-cols-auto-fit-min-200 gap-6"
-        >
+        <div id="app" class="grid grid-cols-auto-fit-min-200 gap-6">
           <card
             v-for="card in cards"
             :data-image="card.gameBanner"
