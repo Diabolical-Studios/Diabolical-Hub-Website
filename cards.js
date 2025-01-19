@@ -9,6 +9,7 @@ Vue.component("card", {
       ref="card">
       <div class="card" :style="cardStyle">
               <div class="card-header">
+          <slot name="icon"></slot>
           <slot name="team"></slot>
         </div>
         <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
@@ -94,7 +95,7 @@ const app = new Vue({
       if (Array.isArray(data)) {
         this.cards = data.map((card) => ({
           gameBanner: card.background_image_url,
-          gameIcon: card.background_image_url, // Adjust if you have a specific icon URL
+          gameIcon: card.team_icon_url, // Adjust if you have a specific icon URL
           teamName: card.game_name,
           gameName: card.game_name,
           gameDescription: card.description,
