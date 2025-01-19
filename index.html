@@ -65,7 +65,7 @@
             :data-image="card.gameBanner"
             :key="card.teamName"
           >
-            <img slot="icon" :src="card.teamIcon" class="game-icon" />
+            <img slot="icon" :src="card.gameIcon" class="game-icon" />
             <h4 slot="team" style="font-weight: 300; font-family: 'Consolas'">
               {{ card.teamName }}
             </h4>
@@ -150,7 +150,7 @@
 
             const icon = document.createElement("img");
             icon.setAttribute("slot", "icon");
-            icon.textContent = card.teamIcon;
+            icon.textContent = card.gameIcon;
 
             const team = document.createElement("h4");
             team.setAttribute("slot", "team");
