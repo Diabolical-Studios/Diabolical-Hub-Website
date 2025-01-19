@@ -58,7 +58,7 @@
       <main class="w-3/4 p-6 overflow-y-auto">
         <div
           id="app"
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+          class="grid grid-cols-auto-fit-min-200 gap-6"
         >
           <card
             v-for="card in cards"
@@ -80,7 +80,7 @@
               style="margin: 0 !important"
             >
               <span class="header__btn-wrapper">
-                <span class="header__btn-text">Download Build</span>
+                <span class="header__btn-text">Open With Launcher</span>
               </span>
             </a>
           </card>

@@ -21,6 +21,9 @@ module.exports = {
       backgroundPosition: {
         "default": "0 0, 0 0",
       },
+      gridTemplateColumns: {
+        'auto-fit-min-200': 'repeat(auto-fit, minmax(200px, 1fr))',
+      },
     },
   },
   plugins: [],
