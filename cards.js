@@ -8,10 +8,6 @@ Vue.component("card", {
       @mouseleave="handleMouseLeave"
       ref="card">
       <div class="card" :style="cardStyle">
-        <div class="card-header">
-          <slot name="icon"></slot>
-          <slot name="team"></slot>
-        </div>
         <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
         <div class="card-info">
           <slot name="header"></slot>
@@ -100,7 +96,7 @@ const app = new Vue({
             teamName: card.game_name,
             gameName: card.game_name,
             gameDescription: card.description,
-            gameBuild: '#', // Placeholder; update if a build URL exists
+            gameBuild: 'diabolicallauncher://' + card.game_id, // Placeholder; update if a build URL exists
           }));
         } else {
           console.error("Unexpected data format:", data);
