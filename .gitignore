@@ -28,3 +28,6 @@ cabal.project.local~
 
 # Local Netlify folder
 .netlify
+
+node_modules
+

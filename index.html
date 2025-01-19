@@ -1,200 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#131313">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#131313" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 
     <title>Diabolical HUB</title>
-    <link rel="icon" href="favicon.png">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/card.css" rel="stylesheet">
+    <link rel="icon" href="favicon.png" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/card.css" rel="stylesheet" />
+    <link href="css/button.css" rel="stylesheet" />
+
     <script defer="defer" src="cards.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
 
-</head>
+  <body
+    class="w-screen h-screen bg-black bg-radial bg-[position:0_0] bg-20px text-white font-mono overflow-hidden animate-moveBackground select-none"
+  >
+    <!-- Header -->
+    <header class="flex justify-between items-center px-6 py-4 h-[10svh]">
+      <div class="flex items-center">
+        <img src="./assets/images/logo.png" alt="Logo" class="h-10" />
+      </div>
+      <nav class="flex space-x-4 items-center">
+        <a href="#" class="text-gray-300 hover:underline">Home</a>
+        <a href="#" class="text-gray-300 hover:underline">Discord</a>
+        <button class="shiny-cta">
+          <span>Login With Github</span>
+        </button>
+      </nav>
+    </header>
 
-<body class="no-scrollz">
+    <!-- Content Area -->
+    <div class="flex h-[90svh]">
+      <!-- Sidebar -->
+      <aside class="w-1/4 h-full p-6">
+        <h2 class="text-lg font-bold uppercase tracking-wider">Games</h2>
+      </aside>
 
-    <section class="intro">
-
-
-        <header class="header">
-            <!-- <div class="disclaimer" style="padding: 20px; display: flex; align-items: center; justify-content: center; width: 100vw; background-color: #E3B40C; color: #000; font-family: 'Consolas'; font-weight: 800;">DISCLAIMER: Not associated with BUG Lab Tekmer in any way! Made by Diabolical Studios</div> -->
-
-            <div class="header__container">
-                <div class="header__logo" data-clone="logo">
-                    <img src="assets\images\logo.png" alt="logo">
-                </div>
-                <nav class="header__nav" data-clone="nav">
-                    <a href="/" class="header__link">Home</a>
-                    <a href="https://discord.gg/" class="header__link">Discord</a>
-                </nav>
-
-                <a href="#" class="header__btn" onclick="startGitHubAuth()" id="loginButton" data-clone="mint-btn">
-                    <span class="header__btn-wrapper">
-                        <span class="header__btn-text">Login with</span>
-
-                        <svg id="githubIcon" width="28px" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg"
-                            style="margin-left: 8px; vertical-align: middle;">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
-                                fill="#fff" />
-                        </svg>
-                    </span>
-                </a>
+      <!-- Games Grid -->
+      <main class="w-3/4 p-6 overflow-y-auto">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="app"
+        >
+          <div class="card-wrap">
+            <div class="card" style="transform: rotateY(0deg) rotateX(0deg)">
+              <div
+                class="card-bg"
+                style="
+                  background-image: url('https://diabolical.studio/min/artworks/forgekeepers/image_lowres.jpg');
+                  transform: translateX(0px) translateY(0px);
+                "
+              ></div>
+              <div class="card-info">
+                <h2>Forgekeepers</h2>
+                
+              </div>
             </div>
-        </header>
-
-        <div class="intro__background slide" id="slide1">
-
-
-            <div class="hero__content">
-
-                <div id="app" class="card-container" style="z-index: 5;">
-                    <card v-for="card in cards" :data-image="card.gameBanner" :key="card.teamName">
-                      <img slot="icon" :src="card.gameIcon" class="game-icon">
-                      <h4 slot="team" style="font-weight: 300; font-family: 'Consolas';">{{ card.teamName }}</h4>
-                      <h2 slot="header">{{ card.gameName }}</h2>
-                      <p slot="content">{{ card.gameDescription }}</p>
-                      <a slot="build" :href="card.gameBuild" download class="header__btn" data-clone="mint-btn"
-                        style="margin: 0 !important;">
-                        <span class="header__btn-wrapper">
-                          <span class="header__btn-text">Download Build</span>
-                        </span>
-                      </a>
-                    </card>
-                  </div>                  
-
-            </div>
-
-            <div class="intro_coordinates">
-                <h3>diabolical HUB</h3>
-            </div>
+          </div>
         </div>
-
-    </section>
-
+      </main>
+    </div>
 
     <script>
-        window.onload = function () {
-            checkLoginAndUpdateButton();
-        };
+      window.onload = function () {
+        checkLoginAndUpdateButton();
+      };
 
-        function checkLoginAndUpdateButton() {
-            // Example check for a cookie named 'loggedIn', replace with your actual logic
-            if (document.cookie.split(';').some((item) => item.trim().startsWith('sessionID='))) {
-                // User is logged in, update the button
-                const loginButton = document.getElementById('loginButton');
-                const buttonText = loginButton.querySelector('.header__btn-text');
-                const githubIcon = document.getElementById('githubIcon');
+      function checkLoginAndUpdateButton() {
+        // Example check for a cookie named 'loggedIn', replace with your actual logic
+        if (
+          document.cookie
+            .split(";")
+            .some((item) => item.trim().startsWith("sessionID="))
+        ) {
+          // User is logged in, update the button
+          const loginButton = document.getElementById("loginButton");
+          const buttonText = loginButton.querySelector(".header__btn-text");
+          const githubIcon = document.getElementById("githubIcon");
 
-                buttonText.textContent = 'Upload';  // Change the text to 'Upload'
-                githubIcon.style.display = 'none';  // Hide the GitHub icon
-            }
+          buttonText.textContent = "Upload"; // Change the text to 'Upload'
+          githubIcon.style.display = "none"; // Hide the GitHub icon
         }
+      }
 
-        function startGitHubAuth() {
-            const client_id = "f64b9bcd2b2d41051d93";
-            const redirect_uri = encodeURIComponent(window.location.origin + "/.netlify/functions/github-auth");
-            const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}`;
-            window.location.href = githubAuthUrl;
-        }
+      function startGitHubAuth() {
+        const client_id = "f64b9bcd2b2d41051d93";
+        const redirect_uri = encodeURIComponent(
+          window.location.origin + "/.netlify/functions/github-auth"
+        );
+        const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}`;
+        window.location.href = githubAuthUrl;
+      }
     </script>
 
     <script>
-        async function loadCards() {
-            try {
-                const response = await fetch('/.netlify/functions/fetchCards', { cache: 'no-store' });
+      async function loadCards() {
+        try {
+          const response = await fetch("/.netlify/functions/fetchCards", {
+            cache: "no-store",
+          });
 
-                // Check if response was successful
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+          // Check if response was successful
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
 
-                const data = await response.json();
+          const data = await response.json();
 
-                // Ensure that data.cards is defined and is an array
-                if (!Array.isArray(data.cards)) {
-                    console.error("Expected data.cards to be an array, but received:", data.cards);
-                    return;
-                }
+          // Ensure that data.cards is defined and is an array
+          if (!Array.isArray(data.cards)) {
+            console.error(
+              "Expected data.cards to be an array, but received:",
+              data.cards
+            );
+            return;
+          }
 
-                const cardContainer = document.getElementById('app');
-                data.cards.forEach(card => {
-                    const cardElement = document.createElement('card');
-                    cardElement.setAttribute('data-image', card.gameBanner);
+          const cardContainer = document.getElementById("app");
+          data.cards.forEach((card) => {
+            const cardElement = document.createElement("card");
+            cardElement.setAttribute("data-image", card.gameBanner);
 
-                    const icon = document.createElement('img');
-                    icon.setAttribute('slot', 'icon');
-                    icon.textContent = card.gameIcon;
+            const icon = document.createElement("img");
+            icon.setAttribute("slot", "icon");
+            icon.textContent = card.gameIcon;
 
-                    const team = document.createElement('h4');
-                    team.setAttribute('slot', 'team');
-                    team.textContent = card.teamName;
+            const team = document.createElement("h4");
+            team.setAttribute("slot", "team");
+            team.textContent = card.teamName;
 
-                    const header = document.createElement('h2');
-                    header.setAttribute('slot', 'header');
-                    header.textContent = card.gameName;
+            const header = document.createElement("h2");
+            header.setAttribute("slot", "header");
+            header.textContent = card.gameName;
 
-                    const content = document.createElement('p');
-                    content.setAttribute('slot', 'content');
-                    content.textContent = card.gameDescription;
+            const content = document.createElement("p");
+            content.setAttribute("slot", "content");
+            content.textContent = card.gameDescription;
 
-                    cardElement.appendChild(header);
-                    cardElement.appendChild(content);
-                    cardContainer.appendChild(cardElement);
-                });
-            } catch (error) {
-                console.error("Error in loadCards:", error);
-            }
+            cardElement.appendChild(header);
+            cardElement.appendChild(content);
+            cardContainer.appendChild(cardElement);
+          });
+        } catch (error) {
+          console.error("Error in loadCards:", error);
         }
+      }
     </script>
 
     <script>
-        // Function to get cookie by name
-        function getCookie(name) {
-            let cookie = {};
-            document.cookie.split(';').forEach(function (el) {
-                let [key, value] = el.split('=');
-                cookie[key.trim()] = value;
-            })
-            return cookie[name];
+      // Function to get cookie by name
+      function getCookie(name) {
+        let cookie = {};
+        document.cookie.split(";").forEach(function (el) {
+          let [key, value] = el.split("=");
+          cookie[key.trim()] = value;
+        });
+        return cookie[name];
+      }
+
+      // Function to change the button if the user is logged in
+      function changeAuthButtonIfLoggedIn() {
+        const sessionCookie = getCookie("sessionID");
+        const authButton = document.getElementById("authButton");
+
+        if (sessionCookie) {
+          // If the sessionID cookie exists, change the button to 'Upload'
+          authButton.textContent = "Upload";
+          //authButton.onclick = function () { window.location.href = '/upload'; }; // Modify this URL to your actual upload page
+        } else {
+          // If the cookie does not exist, show 'Login with GitHub'
+          authButton.textContent = "Login with GitHub";
+          authButton.onclick = function () {
+            startGitHubAuth();
+          };
         }
+      }
 
-        // Function to change the button if the user is logged in
-        function changeAuthButtonIfLoggedIn() {
-            const sessionCookie = getCookie('sessionID');
-            const authButton = document.getElementById('authButton');
-
-            if (sessionCookie) {
-                // If the sessionID cookie exists, change the button to 'Upload'
-                authButton.textContent = 'Upload';
-                //authButton.onclick = function () { window.location.href = '/upload'; }; // Modify this URL to your actual upload page
-            } else {
-                // If the cookie does not exist, show 'Login with GitHub'
-                authButton.textContent = 'Login with GitHub';
-                authButton.onclick = function () { startGitHubAuth(); };
-            }
-        }
-
-        // Run the check when the window loads
-        window.onload = changeAuthButtonIfLoggedIn;
+      // Run the check when the window loads
+      window.onload = changeAuthButtonIfLoggedIn;
     </script>
-
-
-</body>
-
+  </body>
 </html>
