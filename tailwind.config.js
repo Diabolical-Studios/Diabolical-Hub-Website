@@ -22,7 +22,7 @@ module.exports = {
         "default": "0 0, 0 0",
       },
       gridTemplateColumns: {
-        'auto-fit-min-200': 'repeat(auto-fit, minmax(200px, 1fr))',
+        'auto-fit-min-240': 'repeat(auto-fit, minmax(240px, 1fr))',
       },
     },
   },
