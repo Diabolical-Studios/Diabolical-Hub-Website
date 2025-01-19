@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 exports.handler = async () => {
-  const GAMES_URL = 'https://diabolical.studio/.netlify/functions/fetchGames';
+  const GAMES_URL = 'https://api.diabolical.studio/games';
 
   try {
     const response = await axios.get(GAMES_URL);
