@@ -8,9 +8,11 @@ Vue.component("card", {
       @mouseleave="handleMouseLeave"
       ref="card">
       <div class="card" :style="cardStyle">
+              <div class="card-header">
+          <slot name="team"></slot>
+        </div>
         <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
         <div class="card-info">
-          <slot name="header"></slot>
           <slot name="content"></slot>
           <slot name="build"></slot>
         </div>
@@ -72,38 +74,37 @@ Vue.component("card", {
 });
 
 const app = new Vue({
-    el: "#app",
-    data: {
-      cards: [],
-    },
-    async mounted() {
-      try {
-        const response = await fetch("/.netlify/functions/fetchCards", {
-          cache: "no-store",
-        });
-  
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-  
-        const data = await response.json();
-  
-        // Map the API data directly to the card structure
-        if (Array.isArray(data)) {
-          this.cards = data.map(card => ({
-            gameBanner: card.background_image_url,
-            gameIcon: card.background_image_url, // Adjust if you have a specific icon URL
-            teamName: card.game_name,
-            gameName: card.game_name,
-            gameDescription: card.description,
-            gameBuild: 'diabolicallauncher://' + card.game_id, // Placeholder; update if a build URL exists
-          }));
-        } else {
-          console.error("Unexpected data format:", data);
-        }
-      } catch (error) {
-        console.error("Error fetching cards:", error);
+  el: "#app",
+  data: {
+    cards: [],
+  },
+  async mounted() {
+    try {
+      const response = await fetch("/.netlify/functions/fetchCards", {
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    },
-  });
-  
+
+      const data = await response.json();
+
+      // Map the API data directly to the card structure
+      if (Array.isArray(data)) {
+        this.cards = data.map((card) => ({
+          gameBanner: card.background_image_url,
+          gameIcon: card.background_image_url, // Adjust if you have a specific icon URL
+          teamName: card.game_name,
+          gameName: card.game_name,
+          gameDescription: card.description,
+          gameBuild: "diabolicallauncher://" + card.game_id, // Placeholder; update if a build URL exists
+        }));
+      } else {
+        console.error("Unexpected data format:", data);
+      }
+    } catch (error) {
+      console.error("Error fetching cards:", error);
+    }
+  },
+});
