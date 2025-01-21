@@ -39,20 +39,23 @@ exports.handler = async function (event) {
 
     const { id: github_id, login: username, email = "N/A" } = userResponse.data;
 
+    // Generate session ID
+    const sessionID = uuidv4();
+    console.log("Generated sessionID:", sessionID);
+
     // Log the payload to verify
-    console.log("Payload:", { github_id, username, email });
+    console.log("Payload:", { github_id, username, email, sessionID });
 
     // Create or update the user using the REST API
     await axios.post(
       `${API_BASE_URL}/users`,
-      { github_id, username, email },
+      { github_id, username, email, session_id: sessionID },
       {
         headers: { "x-api-key": API_KEY },
       }
     );
 
-    // Generate session ID and set it in cookies
-    const sessionID = uuidv4();
+    // Set the session ID in cookies
     const expiryTime = new Date();
     expiryTime.setHours(expiryTime.getHours() + 24);
 
@@ -72,3 +75,4 @@ exports.handler = async function (event) {
     };
   }
 };
+
