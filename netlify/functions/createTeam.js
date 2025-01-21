@@ -61,7 +61,7 @@ exports.handler = async (event) => {
     // Create the team using the retrieved github_id
     const createTeamResponse = await axios.post(
       `${API_BASE_URL}/teams`,
-      { team_name, owner_id: github_id },
+      { team_name, user_id: github_id },
       {
         headers: { 'x-api-key': API_KEY },
       }
