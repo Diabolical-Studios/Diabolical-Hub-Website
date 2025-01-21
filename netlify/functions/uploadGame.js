@@ -1,4 +1,4 @@
-const mysql = require('mysql2/promise');
+const axios = require('axios');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -8,7 +8,8 @@ exports.handler = async (event) => {
     };
   }
 
-  const { game_name, description, team_name, team_icon_url, background_image_url, version } = JSON.parse(event.body);
+  const { game_id, team_name, game_name, version, description, background_image_url, team_icon_url } = JSON.parse(event.body);
+  const API_BASE_URL = process.env.API_BASE_URL;
 
   if (!game_name || !team_name || !version) {
     return {
@@ -18,36 +19,27 @@ exports.handler = async (event) => {
   }
 
   try {
-    const connection = await mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-    });
-
-    // Validate team existence
-    const [team] = await connection.execute(
-      `SELECT team_id FROM teams WHERE team_name = ?`,
-      [team_name]
-    );
-
-    if (team.length === 0) {
+    // Validate team existence via REST API
+    const teamResponse = await axios.get(`${API_BASE_URL}/teams?name=${team_name}`);
+    if (!teamResponse.data || !teamResponse.data.team_id) {
       return {
         statusCode: 404,
         body: JSON.stringify({ error: 'Team not found' }),
       };
     }
 
-    const team_id = team[0].team_id;
+    const team_id = teamResponse.data.team_id;
 
-    // Insert the game into the database
-    await connection.execute(
-      `INSERT INTO games (game_name, description, team_icon_url, background_image_url, team_name, version)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [game_name, description, team_icon_url, background_image_url, team_name, version]
-    );
-
-    await connection.end();
+    // Add game via REST API
+    await axios.post(`${API_BASE_URL}/games`, {
+      game_id,
+      team_name,
+      game_name,
+      version,
+      description,
+      background_image_url,
+      team_icon_url,
+    });
 
     return {
       statusCode: 201,
@@ -56,7 +48,7 @@ exports.handler = async (event) => {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
+      body: JSON.stringify({ error: error.response?.data || error.message }),
     };
   }
 };

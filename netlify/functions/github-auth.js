@@ -1,14 +1,10 @@
 const axios = require('axios');
-const mysql = require('mysql2/promise'); // MySQL integration
 const { v4: uuidv4 } = require('uuid');
 
 exports.handler = async function (event) {
   const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
   const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-  const DB_HOST = process.env.DB_HOST;
-  const DB_USER = process.env.DB_USER;
-  const DB_PASSWORD = process.env.DB_PASSWORD;
-  const DB_NAME = process.env.DB_NAME;
+  const API_BASE_URL = process.env.API_BASE_URL; // REST API base URL
 
   const code = event.queryStringParameters.code;
 
@@ -42,21 +38,12 @@ exports.handler = async function (event) {
 
     const { id: github_id, login: username, email } = userResponse.data;
 
-    // Connect to database and store or update the user
-    const connection = await mysql.createConnection({
-      host: DB_HOST,
-      user: DB_USER,
-      password: DB_PASSWORD,
-      database: DB_NAME,
+    // Create or update the user using the REST API
+    await axios.post(`${API_BASE_URL}/users`, {
+      github_id,
+      username,
+      email,
     });
-
-    await connection.execute(
-      `INSERT INTO users (github_id, username, email) VALUES (?, ?, ?)
-       ON DUPLICATE KEY UPDATE username=VALUES(username), email=VALUES(email)`,
-      [github_id, username, email]
-    );
-
-    await connection.end();
 
     // Generate session ID and set it in cookies
     const sessionID = uuidv4();
@@ -75,7 +62,7 @@ exports.handler = async function (event) {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
+      body: JSON.stringify({ error: error.response?.data || error.message }),
     };
   }
 };
