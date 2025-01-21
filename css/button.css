@@ -50,7 +50,7 @@ https://ryanmulligan.dev/blog/css-property-new-style/
   font-size: 1rem;
   line-height: 1.2;
   border: 1px solid transparent;
-  border-radius: 360px;
+  border-radius: 4px;
   color: var(--shiny-cta-fg);
   background: linear-gradient(var(--shiny-cta-bg), var(--shiny-cta-bg))
       padding-box,

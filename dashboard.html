@@ -8,6 +8,7 @@
     <link rel="icon" href="favicon.png" />
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/card.css" rel="stylesheet" />
+    <link href="css/button.css" rel="stylesheet" />
     <script defer="defer" src="cards.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
@@ -26,123 +27,6 @@
     />
 
     <style>
-      #upload-form {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        padding: 20px;
-        width: 50vw;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        transition: transform 0.2s;
-      }
-
-      @media (max-width: 1200px) {
-        #upload-form {
-          background-color: rgba(255, 255, 255, 0.1);
-          border-radius: 8px;
-          padding: 20px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-          transition: transform 0.2s;
-          width: 90vw;
-          overflow: auto;
-          height: 70svh;
-        }
-      }
-
-      #upload-form:hover {
-        transform: translateY(-3px);
-      }
-
-      #upload-form label {
-        font-weight: 400;
-        margin-bottom: 5px;
-        color: #ffffff;
-        display: block;
-      }
-
-      #upload-form input[type="text"],
-      #upload-form input[type="url"],
-      #upload-form textarea,
-      #upload-form input[type="file"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        background-color: rgba(255, 255, 255, 0.2);
-        color: #e3b40c;
-        font-size: 16px;
-      }
-
-      #upload-form input[type="submit"] {
-        background-color: #008cba;
-        color: rgb(255, 255, 255);
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.2s;
-      }
-
-      #upload-form input[type="submit"]:hover {
-        background-color: #005f5f;
-      }
-
-      #upload-form select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        background-color: rgba(255, 255, 255, 0.2);
-        color: #e3b40c;
-        font-size: 16px;
-      }
-
-      #upload-form option {
-        background-color: #333;
-        color: #e3b40c;
-      }
-
-      .hero__title {
-        transition: color 0.2s;
-      }
-
-      .hero__title:hover {
-        color: #e3b40c;
-      }
-
-      textarea {
-        resize: vertical;
-      }
-
-      /* Add your toast styles here */
-      .toast-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 999999;
-      }
-
-      .toast-notification {
-        background-color: #333;
-        color: white;
-        padding: 15px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        opacity: 0;
-        transition: opacity 0.5s, transform 0.5s;
-        transform: translateY(-100px);
-        display: none;
-        width: 250px;
-      }
-
-      .toast-show {
-        display: block;
-        opacity: 1;
-        transform: translateY(0);
-      }
-
       body {
         display: flex;
         flex-direction: column;
@@ -156,8 +40,8 @@
     class="w-screen h-screen bg-black bg-radial bg-[position:0_0] bg-20px text-white font-mono overflow-hidden animate-moveBackground select-none"
   >
     <div class="flex gap-6">
-      <div class="flex-1 w-2/4">
-        <h1 class="text-2xl font-bold text-yellow-400 mb-4">Create Team</h1>
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background-color: #000; border-radius: 4px; outline: solid 2px #161616;">
+        <h1 style="font-size: 20px;" class="font-bold text-yellow-400 mb-4">Create Team</h1>
         <form
           id="createTeamForm"
           onsubmit="createTeam(event)"
@@ -169,47 +53,78 @@
             gap: 12px;
           "
         >
-          <input type="text" name="teamName" placeholder="Team Name" required />
+          <input
+            style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;;"
+            type="text"
+            name="teamName"
+            placeholder="Team Name"
+            required
+          />
 
           <!-- Submit Button -->
-          <button
-            type="submit"
-            class="w-full py-2 bg-yellow-500 text-gray-800 font-bold rounded hover:bg-yellow-400"
-          >
-            Submit
+
+          <button class="shiny-cta" type="submit">
+            <span>Submit</span>
           </button>
         </form>
       </div>
 
-      <div class="flex-1">
-        <h1 class="text-2xl font-bold text-yellow-400 mb-4">Upload Game</h1>
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background-color: #000; border-radius: 4px; outline: solid 2px #161616;">
+        <h1 style="font-size: 20px;" class="text-2xl font-bold text-yellow-400 mb-4">Upload Game</h1>
         <form
           id="uploadGameForm"
           onsubmit="uploadGame(event)"
           class="space-y-4"
-          style="display: flex; flex-direction: column; gap: 12px"
+          style="display: flex; flex-direction: column; gap: 12px;"
         >
           <input
+            style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;"
+            type="text"
+            name="game_id"
+            placeholder="Game ID"
+          />
+          <input
+            style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;"
             type="text"
             name="game_name"
             placeholder="Game Name"
             required
           />
           <input
+            style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;"
             type="text"
             name="team_name"
             placeholder="Team Name"
             required
           />
-          <input type="text" name="description" placeholder="Description" />
-          <input type="text" name="team_icon_url" placeholder="Icon URL" />
           <input
+            style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;"
+            type="text"
+            name="description"
+            placeholder="Description"
+          />
+          <input
+            style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;"
             type="text"
             name="background_image_url"
-            placeholder="Banner URL"
+            placeholder="Background Image URL"
           />
-          <input type="text" name="version" placeholder="Version" required />
-          <button type="submit">Upload Game</button>
+          <input
+            style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;"
+            type="text"
+            name="team_icon_url"
+            placeholder="Team Icon URL"
+          />
+          <input
+            style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;"
+            type="text"
+            name="version"
+            placeholder="Version"
+            required
+          />
+          <button class="shiny-cta" type="submit">
+            <span>Upload Game</span>
+          </button>
         </form>
       </div>
     </div>
