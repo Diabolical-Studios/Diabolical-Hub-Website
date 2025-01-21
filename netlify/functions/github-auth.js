@@ -38,6 +38,7 @@ exports.handler = async function (event) {
     });
 
     const { id: github_id, login: username, email } = userResponse.data;
+    console.log('Payload:', { github_id, username, email });
 
     // Create or update the user using the REST API
     await axios.post(
