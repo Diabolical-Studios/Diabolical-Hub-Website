@@ -4,7 +4,8 @@ const { v4: uuidv4 } = require('uuid');
 exports.handler = async function (event) {
   const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
   const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-  const API_BASE_URL = process.env.API_BASE_URL; // REST API base URL
+  const API_BASE_URL = process.env.API_BASE_URL;
+  const API_KEY = process.env.API_KEY;
 
   const code = event.queryStringParameters.code;
 
@@ -39,11 +40,13 @@ exports.handler = async function (event) {
     const { id: github_id, login: username, email } = userResponse.data;
 
     // Create or update the user using the REST API
-    await axios.post(`${API_BASE_URL}/users`, {
-      github_id,
-      username,
-      email,
-    });
+    await axios.post(
+      `${API_BASE_URL}/users`,
+      { github_id, username, email },
+      {
+        headers: { 'x-api-key': API_KEY },
+      }
+    );
 
     // Generate session ID and set it in cookies
     const sessionID = uuidv4();
