@@ -1,34 +1,26 @@
 const axios = require('axios');
-const { v4: uuidv4 } = require('uuid'); // Import UUID library to generate unique session IDs
+const mysql = require('mysql2/promise'); // MySQL integration
+const { v4: uuidv4 } = require('uuid');
 
-exports.handler = async function (event, context) {
+exports.handler = async function (event) {
   const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
   const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+  const DB_HOST = process.env.DB_HOST;
+  const DB_USER = process.env.DB_USER;
+  const DB_PASSWORD = process.env.DB_PASSWORD;
+  const DB_NAME = process.env.DB_NAME;
+
   const code = event.queryStringParameters.code;
 
-  console.log('Starting GitHub OAuth process...');
-  console.log('CLIENT_ID:', CLIENT_ID ? 'Provided' : 'Not provided');
-  console.log('CLIENT_SECRET:', CLIENT_SECRET ? 'Provided' : 'Not provided');
-  console.log('Code:', code);
-
   if (!code) {
-    console.error('Error: Missing "code" parameter in the request');
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: 'Missing "code" parameter in the request' }),
-    };
-  }
-
-  if (!CLIENT_ID || !CLIENT_SECRET) {
-    console.error('Error: Missing GitHub client credentials');
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Missing GitHub client credentials' }),
+      body: JSON.stringify({ error: 'Missing "code" parameter' }),
     };
   }
 
   try {
-    console.log('Fetching GitHub access token...');
+    // Exchange code for GitHub access token
     const tokenResponse = await axios.post(
       'https://github.com/login/oauth/access_token',
       {
@@ -37,56 +29,41 @@ exports.handler = async function (event, context) {
         code: code,
       },
       {
-        headers: {
-          accept: 'application/json',
-        },
+        headers: { accept: 'application/json' },
       }
     );
 
     const accessToken = tokenResponse.data.access_token;
-    if (!accessToken) {
-      throw new Error('Access token not received from GitHub');
-    }
-    console.log('Access Token Retrieved:', accessToken);
 
-    console.log('Fetching GitHub user information...');
+    // Get user info from GitHub
     const userResponse = await axios.get('https://api.github.com/user', {
-      headers: {
-        Authorization: `token ${accessToken}`,
-      },
+      headers: { Authorization: `token ${accessToken}` },
     });
 
-    const username = userResponse.data.login;
-    console.log('GitHub Username:', username);
+    const { id: github_id, login: username, email } = userResponse.data;
 
-    console.log('Fetching authorized users...');
-    const teamAssignmentsResponse = await axios.get(
-      'https://hub.diabolical.studio/authorized_users.json'
+    // Connect to database and store or update the user
+    const connection = await mysql.createConnection({
+      host: DB_HOST,
+      user: DB_USER,
+      password: DB_PASSWORD,
+      database: DB_NAME,
+    });
+
+    await connection.execute(
+      `INSERT INTO users (github_id, username, email) VALUES (?, ?, ?)
+       ON DUPLICATE KEY UPDATE username=VALUES(username), email=VALUES(email)`,
+      [github_id, username, email]
     );
-    const teamAssignments = teamAssignmentsResponse.data;
 
-    let userTeam = null;
-    console.log('Authorized Users:', teamAssignments);
-    for (const [team, users] of Object.entries(teamAssignments)) {
-      if (users.includes(username)) {
-        userTeam = team;
-        break;
-      }
-    }
-    console.log('User Team:', userTeam || 'No team found');
+    await connection.end();
 
+    // Generate session ID and set it in cookies
     const sessionID = uuidv4();
-    console.log('Generated Session ID:', sessionID);
-
     const expiryTime = new Date();
     expiryTime.setHours(expiryTime.getHours() + 24);
-    console.log('Session Expiry Time:', expiryTime);
 
-    const redirectUrl = userTeam
-      ? `https://hub.diabolical.studio/upload?team=${userTeam}&username=${username}`
-      : 'https://hub.diabolical.studio';
-    console.log('Redirect URL:', redirectUrl);
-
+    const redirectUrl = `https://hub.diabolical.studio/dashboard?username=${username}`;
     return {
       statusCode: 303,
       headers: {
@@ -96,10 +73,9 @@ exports.handler = async function (event, context) {
       body: '',
     };
   } catch (error) {
-    console.error('Error occurred:', error.response ? error.response.data : error.message);
     return {
-      statusCode: error.response ? error.response.status : 500,
-      body: JSON.stringify({ error: error.response ? error.response.data : error.message }),
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };

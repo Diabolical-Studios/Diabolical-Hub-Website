@@ -172,38 +172,5 @@
         }
       }
     </script>
-
-    <script>
-      // Function to get cookie by name
-      function getCookie(name) {
-        let cookie = {};
-        document.cookie.split(";").forEach(function (el) {
-          let [key, value] = el.split("=");
-          cookie[key.trim()] = value;
-        });
-        return cookie[name];
-      }
-
-      // Function to change the button if the user is logged in
-      function changeAuthButtonIfLoggedIn() {
-        const sessionCookie = getCookie("sessionID");
-        const authButton = document.getElementById("authButton");
-
-        if (sessionCookie) {
-          // If the sessionID cookie exists, change the button to 'Upload'
-          authButton.textContent = "Upload";
-          //authButton.onclick = function () { window.location.href = '/upload'; }; // Modify this URL to your actual upload page
-        } else {
-          // If the cookie does not exist, show 'Login with GitHub'
-          authButton.textContent = "Login with GitHub";
-          authButton.onclick = function () {
-            startGitHubAuth();
-          };
-        }
-      }
-
-      // Run the check when the window loads
-      window.onload = changeAuthButtonIfLoggedIn;
-    </script>
   </body>
 </html>
