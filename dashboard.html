@@ -162,19 +162,19 @@
           id="createTeamForm"
           onsubmit="createTeam(event)"
           class="space-y-4"
-          style="width: fit-content"
+          style="
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+          "
         >
-          <!-- Game Name -->
-          <div>
-            <input
-              type="text"
-              id="gameName"
-              name="gameName"
-              placeholder="Team Name"
-              required
-              class="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-gray-200 rounded"
-            />
-          </div>
+          <input
+            type="text"
+            name="team_name"
+            placeholder="Team Name"
+            required
+          />
 
           <!-- Submit Button -->
           <button
@@ -222,19 +222,64 @@
     <script>
       async function createTeam(event) {
         event.preventDefault();
-        const teamName = event.target.team_name.value;
 
-        const response = await fetch("/.netlify/functions/createTeam", {
-          method: "POST",
-          body: JSON.stringify({ team_name: teamName, user_id: 1 }), // Replace user_id with session data
-        });
+        console.log("Starting createTeam process...");
 
-        const data = await response.json();
-        if (response.ok) {
-          alert("Team created successfully");
-        } else {
-          alert(`Error: ${data.error}`);
+        // Get the team name from the form
+        const teamName = event.target.teamName.value;
+        console.log("Team name provided:", teamName);
+
+        // Fetch the session or user ID (replace with actual logic if stored in cookies or localStorage)
+        const userId = getUserIdFromSession(); // Define this function below to fetch the user_id
+        console.log("User ID fetched:", userId);
+
+        if (!userId) {
+          alert("User is not logged in. Unable to create team.");
+          console.error("Error: Missing user ID");
+          return;
         }
+
+        try {
+          // Call the Netlify serverless function
+          const response = await fetch("/.netlify/functions/createTeam", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ team_name: teamName, user_id: userId }),
+          });
+
+          console.log("Response received from createTeam function:", response);
+
+          const data = await response.json();
+          console.log("Response data:", data);
+
+          if (response.ok) {
+            alert("Team created successfully");
+            console.log("Team created successfully with ID:", data.team_id);
+          } else {
+            alert(`Error: ${data.error}`);
+            console.error("Error response from API:", data.error);
+          }
+        } catch (error) {
+          console.error("Error occurred while creating the team:", error);
+          alert(`Error: ${error.message}`);
+        }
+      }
+
+      // Helper function to fetch the user ID from cookies or localStorage
+      function getUserIdFromSession() {
+        const sessionCookie = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("sessionID="));
+
+        if (!sessionCookie) {
+          console.warn("No session cookie found");
+          return null;
+        }
+
+        // Placeholder for your actual logic to extract user ID from the session or API
+        // For now, you can return a hardcoded user ID for testing
+        console.log("Session cookie:", sessionCookie);
+        return 1; // Replace with actual logic to get user ID
       }
     </script>
 

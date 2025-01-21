@@ -1,5 +1,5 @@
-const axios = require('axios');
-const { v4: uuidv4 } = require('uuid');
+const axios = require("axios");
+const { v4: uuidv4 } = require("uuid");
 
 exports.handler = async function (event) {
   const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
@@ -19,33 +19,35 @@ exports.handler = async function (event) {
   try {
     // Exchange code for GitHub access token
     const tokenResponse = await axios.post(
-      'https://github.com/login/oauth/access_token',
+      "https://github.com/login/oauth/access_token",
       {
         client_id: CLIENT_ID,
         client_secret: CLIENT_SECRET,
         code: code,
       },
       {
-        headers: { accept: 'application/json' },
+        headers: { accept: "application/json" },
       }
     );
 
     const accessToken = tokenResponse.data.access_token;
 
     // Get user info from GitHub
-    const userResponse = await axios.get('https://api.github.com/user', {
+    const userResponse = await axios.get("https://api.github.com/user", {
       headers: { Authorization: `token ${accessToken}` },
     });
 
-    const { id: github_id, login: username, email } = userResponse.data;
-    console.log('Payload:', { github_id, username, email });
+    const { id: github_id, login: username, email = "N/A" } = userResponse.data;
+
+    // Log the payload to verify
+    console.log("Payload:", { github_id, username, email });
 
     // Create or update the user using the REST API
     await axios.post(
       `${API_BASE_URL}/users`,
       { github_id, username, email },
       {
-        headers: { 'x-api-key': API_KEY },
+        headers: { "x-api-key": API_KEY },
       }
     );
 
@@ -58,10 +60,10 @@ exports.handler = async function (event) {
     return {
       statusCode: 303,
       headers: {
-        'Set-Cookie': `sessionID=${sessionID}; HttpOnly; Secure; SameSite=Strict; Expires=${expiryTime.toUTCString()}`,
+        "Set-Cookie": `sessionID=${sessionID}; HttpOnly; Secure; SameSite=Strict; Expires=${expiryTime.toUTCString()}`,
         Location: redirectUrl,
       },
-      body: '',
+      body: "",
     };
   } catch (error) {
     return {
