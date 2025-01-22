@@ -12,7 +12,7 @@ exports.handler = async (event) => {
   const API_BASE_URL = process.env.API_BASE_URL;
   const API_KEY = process.env.API_KEY;
 
-  if (!game_name || !team_name || !version) {
+  if (!game_name || !team_name || !version || !game_id) {
     return {
       statusCode: 400,
       body: JSON.stringify({ error: 'Missing required fields' }),
