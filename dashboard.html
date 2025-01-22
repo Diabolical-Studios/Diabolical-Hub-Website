@@ -1,177 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Upload Game</title>
+    <link rel="icon" href="favicon.png" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/card.css" rel="stylesheet" />
+    <link href="css/button.css" rel="stylesheet" />
+    <script defer="defer" src="cards.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Upload Game</title>
-  <link rel="icon" href="favicon.png" />
-  <link href="css/style.css" rel="stylesheet" />
-  <link href="css/card.css" rel="stylesheet" />
-  <link href="css/button.css" rel="stylesheet" />
-  <script defer="defer" src="cards.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <meta name="theme-color" content="#222222" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 
-  <meta name="theme-color" content="#222222" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet" />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
 
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
-</head>
-
-<body
-  class="w-screen h-screen bg-black bg-radial bg-[position:0_0] bg-20px text-white font-mono overflow-hidden animate-moveBackground select-none">
-  <div class="flex gap-6" style="width: 50svw;">
-    <div
-      style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background-color: #000; border-radius: 4px; outline: solid 2px #161616;">
-      <h1 style="font-size: 20px;" class="font-bold text-yellow-400 mb-4">Create Team</h1>
-      <form id="createTeamForm" onsubmit="createTeam(event)" class="space-y-4" style="
+  <body
+    class="w-screen h-screen bg-black bg-radial bg-[position:0_0] bg-20px text-white font-mono overflow-hidden animate-moveBackground select-none"
+  >
+    <div class="flex gap-6" style="width: 50svw">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          padding: 24px;
+          background-color: #000;
+          border-radius: 4px;
+          outline: solid 2px #161616;
+        "
+      >
+        <h1 style="font-size: 20px" class="font-bold text-yellow-400 mb-4">
+          Create Team
+        </h1>
+        <form
+          id="createTeamForm"
+          onsubmit="createTeam(event)"
+          class="space-y-4"
+          style="
             width: fit-content;
             display: flex;
             flex-direction: column;
             gap: 12px;
-          ">
-        <input style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;;" type="text"
-          name="teamName" placeholder="Team Name" required />
+          "
+        >
+          <input
+            style="
+              padding: 8px;
+              border-radius: 4px;
+              color: #fff;
+              background-color: #161616;
+            "
+            type="text"
+            name="teamName"
+            placeholder="Team Name"
+            required
+          />
 
-        <!-- Submit Button -->
+          <!-- Submit Button -->
 
-        <button class="shiny-cta" type="submit">
-          <span>Submit</span>
-        </button>
-      </form>
+          <button class="shiny-cta" type="submit">
+            <span>Submit</span>
+          </button>
+        </form>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          padding: 24px;
+          background-color: #000;
+          border-radius: 4px;
+          outline: solid 2px #161616;
+          width: -webkit-fill-available;
+        "
+      >
+        <h1
+          style="font-size: 20px"
+          class="text-2xl font-bold text-yellow-400 mb-4"
+        >
+          Upload Game
+        </h1>
+        <form
+          id="uploadGameForm"
+          onsubmit="uploadGame(event)"
+          class="space-y-4"
+          style="display: flex; flex-direction: column; gap: 12px"
+        >
+          <input
+            style="
+              padding: 8px;
+              border-radius: 4px;
+              color: #fff;
+              background-color: #161616;
+            "
+            type="text"
+            name="game_id"
+            placeholder="Game ID"
+          />
+          <input
+            style="
+              padding: 8px;
+              border-radius: 4px;
+              color: #fff;
+              background-color: #161616;
+            "
+            type="text"
+            name="game_name"
+            placeholder="Game Name"
+            required
+          />
+          <div style="display: flex; gap: 12px; width: -webkit-fill-available">
+            <select
+              name="team_name"
+              style="
+                padding: 8px;
+                border-radius: 4px;
+                color: #fff;
+                background-color: #161616;
+                width: -webkit-fill-available;
+              "
+              required
+            >
+              <option value="" disabled selected>Select your team</option>
+            </select>
+            <button
+              onclick="fetchUserTeams()"
+              style="
+                aspect-ratio: 1/1;
+                height: 100%;
+                background-color: #161616;
+                border-radius: 4px;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                padding: 0;
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="-5.0 -5.0 110.0 110.0"
+                style="width: 16px; height: 16px; display: block"
+              >
+                <path
+                  d="m46.461 6.9336c20.359 0 37.418 14.133 41.906 33.117h6.6914c0.60547 0 1.1289 0.32422 1.3906 0.87109 0.26562 0.54688 0.19531 1.1562-0.18359 1.6328l-13.379 16.809c-0.30469 0.38281-0.72266 0.58203-1.207 0.58203-0.48438 0-0.90625-0.20312-1.207-0.58203l-13.379-16.809c-0.37891-0.47656-0.44531-1.0859-0.18359-1.6328 0.26562-0.54688 0.78516-0.87109 1.3906-0.87109h6.6875c-4.1133-11.801-15.332-20.27-28.535-20.27-16.688 0-30.215 13.527-30.215 30.215s13.527 30.215 30.215 30.215c7.5664 0 14.48-2.7812 19.781-7.375 0.92578-0.80469 2.3086-0.75391 3.1758 0.11328l5.8047 5.8047c0.46875 0.46875 0.69922 1.0508 0.68359 1.7148-0.019532 0.66406-0.28125 1.2305-0.77734 1.6719-7.6133 6.793-17.656 10.922-28.664 10.922-23.785 0-43.066-19.281-43.066-43.066s19.281-43.062 43.07-43.062z"
+                  fill-rule="evenodd"
+                  fill="#fff"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <input
+            style="
+              padding: 8px;
+              border-radius: 4px;
+              color: #fff;
+              background-color: #161616;
+            "
+            type="text"
+            name="description"
+            placeholder="Description"
+          />
+          <input
+            style="
+              padding: 8px;
+              border-radius: 4px;
+              color: #fff;
+              background-color: #161616;
+            "
+            type="text"
+            name="background_image_url"
+            placeholder="Background Image URL"
+          />
+          <input
+            style="
+              padding: 8px;
+              border-radius: 4px;
+              color: #fff;
+              background-color: #161616;
+            "
+            type="text"
+            name="team_icon_url"
+            placeholder="Team Icon URL"
+          />
+          <input
+            style="
+              padding: 8px;
+              border-radius: 4px;
+              color: #fff;
+              background-color: #161616;
+            "
+            type="text"
+            name="version"
+            placeholder="Version"
+            required
+          />
+          <button class="shiny-cta" type="submit">
+            <span>Upload Game</span>
+          </button>
+        </form>
+      </div>
     </div>
 
-    <div
-      style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background-color: #000; border-radius: 4px; outline: solid 2px #161616; width: -webkit-fill-available;">
-      <h1 style="font-size: 20px;" class="text-2xl font-bold text-yellow-400 mb-4">Upload Game</h1>
-      <form id="uploadGameForm" onsubmit="uploadGame(event)" class="space-y-4"
-        style="display: flex; flex-direction: column; gap: 12px;">
-        <input style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;" type="text"
-          name="game_id" placeholder="Game ID" />
-        <input style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;" type="text"
-          name="game_name" placeholder="Game Name" required />
-        <select name="team_name" style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;"
-          required>
-          <option value="" disabled selected>Select your team</option>
-        </select>
+    <script>
+      async function createTeam(event) {
+        event.preventDefault();
 
-        <input style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;" type="text"
-          name="description" placeholder="Description" />
-        <input style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;" type="text"
-          name="background_image_url" placeholder="Background Image URL" />
-        <input style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;" type="text"
-          name="team_icon_url" placeholder="Team Icon URL" />
-        <input style="padding: 8px; border-radius: 4px; color: #fff; background-color: #161616;" type="text"
-          name="version" placeholder="Version" required />
-        <button class="shiny-cta" type="submit">
-          <span>Upload Game</span>
-        </button>
-      </form>
-    </div>
-  </div>
+        console.log("Starting createTeam process...");
 
-  <script>
-    async function createTeam(event) {
-      event.preventDefault();
+        const teamName = event.target.teamName.value;
+        console.log("Team name provided:", teamName);
 
-      console.log("Starting createTeam process...");
+        try {
+          // Call the Netlify function to create the team
+          const response = await fetch("/.netlify/functions/createTeam", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ team_name: teamName }),
+          });
 
-      const teamName = event.target.teamName.value;
-      console.log("Team name provided:", teamName);
+          const data = await response.json();
+          console.log("Create Team Response:", data);
 
-      try {
-        // Call the Netlify function to create the team
-        const response = await fetch("/.netlify/functions/createTeam", {
+          if (response.ok) {
+            alert("Team created successfully!");
+          } else {
+            alert(`Error creating team: ${data.error}`);
+            console.error("Error response from API:", data.error);
+          }
+        } catch (error) {
+          console.error("Error occurred while creating the team:", error);
+          alert(`Error: ${error.message}`);
+        }
+      }
+    </script>
+
+    <script>
+      async function uploadGame(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const response = await fetch("/.netlify/functions/uploadGame", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ team_name: teamName }),
+          body: JSON.stringify(Object.fromEntries(formData)),
         });
 
         const data = await response.json();
-        console.log("Create Team Response:", data);
-
         if (response.ok) {
-          alert("Team created successfully!");
+          alert("Game uploaded successfully");
         } else {
-          alert(`Error creating team: ${data.error}`);
-          console.error("Error response from API:", data.error);
+          alert(`Error: ${data.error}`);
         }
-      } catch (error) {
-        console.error("Error occurred while creating the team:", error);
-        alert(`Error: ${error.message}`);
       }
-    }
-  </script>
+    </script>
 
-  <script>
-    async function uploadGame(event) {
-      event.preventDefault();
-      const formData = new FormData(event.target);
-      const response = await fetch("/.netlify/functions/uploadGame", {
-        method: "POST",
-        body: JSON.stringify(Object.fromEntries(formData)),
-      });
+    <script>
+      async function fetchUserTeams() {
+        try {
+          const response = await fetch("/.netlify/functions/getUserTeams", {
+            method: "GET",
+            credentials: "include",
+          });
 
-      const data = await response.json();
-      if (response.ok) {
-        alert("Game uploaded successfully");
-      } else {
-        alert(`Error: ${data.error}`);
-      }
-    }
-  </script>
+          if (!response.ok) {
+            throw new Error("Failed to fetch user teams");
+          }
 
-  <script>
-    async function fetchUserTeams() {
-      try {
-        const response = await fetch("/.netlify/functions/getUserTeams", {
-          method: "GET",
-          credentials: "include",
-        });
+          const teams = await response.json();
+          const teamDropdown = document.querySelector(
+            "select[name='team_name']"
+          );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch user teams");
+          // Clear existing options
+          teamDropdown.innerHTML = "";
+
+          // Add fetched teams
+          teams.forEach((team) => {
+            const option = document.createElement("option");
+            option.value = team.team_name;
+            option.textContent = team.team_name;
+            teamDropdown.appendChild(option);
+          });
+        } catch (error) {
+          console.error("Error fetching user teams:", error);
+          alert("Failed to load teams. Please try again later.");
         }
-
-        const teams = await response.json();
-        const teamDropdown = document.querySelector("select[name='team_name']");
-
-        // Clear existing options
-        teamDropdown.innerHTML = "";
-
-        // Add fetched teams
-        teams.forEach((team) => {
-          const option = document.createElement("option");
-          option.value = team.team_name;
-          option.textContent = team.team_name;
-          teamDropdown.appendChild(option);
-        });
-      } catch (error) {
-        console.error("Error fetching user teams:", error);
-        alert("Failed to load teams. Please try again later.");
       }
-    }
 
-    // Fetch teams on page load
-    document.addEventListener("DOMContentLoaded", fetchUserTeams);
+      // Fetch teams on page load
+      document.addEventListener("DOMContentLoaded", fetchUserTeams);
+    </script>
 
-  </script>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</body>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </body>
 </html>
