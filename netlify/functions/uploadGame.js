@@ -56,7 +56,8 @@ exports.handler = async (event) => {
     }
 
     // Step 2: Retrieve the GitHub ID of the team owner
-    const teamResponse = await axios.get(`${API_BASE_URL}/teams/${team_name}`, {
+    const encodedTeamName = encodeURIComponent(team_name); // Properly encode the team name
+    const teamResponse = await axios.get(`${API_BASE_URL}/teams/${encodedTeamName}`, {
       headers: { 'x-api-key': API_KEY },
     });
 
