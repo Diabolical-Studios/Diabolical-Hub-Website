@@ -67,9 +67,21 @@ exports.handler = async (event) => {
       }
     );
 
+    // Fetch the updated team list
+    const updatedTeamsResponse = await axios.get(
+      `${API_BASE_URL}/teams/session/${sessionID}`,
+      {
+        headers: { 'x-api-key': API_KEY },
+      }
+    );
+
     return {
       statusCode: 201,
-      body: JSON.stringify(createTeamResponse.data),
+      body: JSON.stringify({
+        message: 'Team created successfully',
+        createdTeam: createTeamResponse.data,
+        updatedTeams: updatedTeamsResponse.data,
+      }),
     };
   } catch (error) {
     console.error('Error:', error);

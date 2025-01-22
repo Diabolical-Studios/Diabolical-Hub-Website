@@ -1,7 +1,8 @@
 const axios = require('axios');
 
 exports.handler = async () => {
-  const GAMES_URL = 'https://api.diabolical.studio/games';
+  const API_BASE_URL = process.env.API_BASE_URL; // Use environment variable for the base URL
+  const GAMES_URL = `${API_BASE_URL}/games`; // Construct the endpoint URL dynamically
 
   try {
     const response = await axios.get(GAMES_URL);
