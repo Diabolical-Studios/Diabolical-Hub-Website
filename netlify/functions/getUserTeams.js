@@ -34,7 +34,7 @@ exports.handler = async (event) => {
 
   try {
     // Fetch the teams for the user using session_id
-    const response = await axios.get(`${API_BASE_URL}/teams/session/${sessionID}`, {
+    const response = await axios.get(`${API_BASE_URL}/rest-api/teams/session/${sessionID}`, {
       headers: { 'x-api-key': API_KEY },
     });
 

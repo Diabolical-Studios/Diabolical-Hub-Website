@@ -42,7 +42,7 @@ exports.handler = async (event) => {
 
   try {
     // Step 1: Retrieve the GitHub ID using sessionID
-    const githubIdResponse = await axios.get(`${API_BASE_URL}/users/session/${sessionID}`, {
+    const githubIdResponse = await axios.get(`${API_BASE_URL}/rest-api/users/session/${sessionID}`, {
       headers: { 'x-api-key': API_KEY },
     });
 
@@ -57,7 +57,7 @@ exports.handler = async (event) => {
 
     // Step 2: Retrieve the GitHub ID of the team owner
     const encodedTeamName = encodeURIComponent(team_name); // Properly encode the team name
-    const teamResponse = await axios.get(`${API_BASE_URL}/teams/${encodedTeamName}`, {
+    const teamResponse = await axios.get(`${API_BASE_URL}/rest-api/teams/${encodedTeamName}`, {
       headers: { 'x-api-key': API_KEY },
     });
 

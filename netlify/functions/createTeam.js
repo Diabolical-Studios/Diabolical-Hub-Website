@@ -43,7 +43,7 @@ exports.handler = async (event) => {
   try {
     // Retrieve the github_id using sessionID
     const githubIdResponse = await axios.get(
-      `${API_BASE_URL}/users/session/${sessionID}`,
+      `${API_BASE_URL}/rest-api/users/session/${sessionID}`,
       {
         headers: { 'x-api-key': API_KEY },
       }
@@ -60,7 +60,7 @@ exports.handler = async (event) => {
 
     // Create the team using the retrieved github_id
     const createTeamResponse = await axios.post(
-      `${API_BASE_URL}/teams`,
+      `${API_BASE_URL}/rest-api/teams`,
       { team_name, github_id: github_id },
       {
         headers: { 'x-api-key': API_KEY },
